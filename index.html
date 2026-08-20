@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Aventix Studios</title>
+<meta name="description" content="Aventix Studios — a Roblox game development studio crafting immersive worlds and experiences." />
+<link rel="icon" href="logo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@1,500;1,600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #0a0708;
+    --bg-2: #0f0a0c;
+    --panel: #16100f;
+    --card: #171012;
+    --card-2: #0f0a0b;
+    --line: rgba(255,255,255,0.08);
+    --line-strong: rgba(255,255,255,0.16);
+    --text: #f6f2f2;
+    --muted: #97898b;
+    --muted-2: #64585a;
+    --accent: #ff3347;
+    --accent-2: #ff6a4a;
+    --accent-soft: rgba(255,51,71,0.14);
+    --accent-glow: rgba(255,51,71,0.4);
+    --live: #ff3347;
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  ::selection { background: var(--accent); color: #fff; }
+  a { color: inherit; text-decoration: none; }
+  h1,h2,h3,.brand { font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.02em; }
+  .wrap { width: min(1200px, 90vw); margin: 0 auto; }
+
+  /* NAV */
+  header { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); z-index: 100; width: min(1200px, 92vw); }
+  nav { display: flex; align-items: center; justify-content: space-between; height: 60px; padding: 0 12px 0 16px; border-radius: 100px; background: rgba(20,14,15,0.6); border: 1px solid var(--line); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); box-shadow: 0 10px 40px -18px rgba(0,0,0,0.8); }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.05rem; }
+  .brand .mark { width: 30px; height: 30px; border-radius: 9px; overflow: hidden; background: linear-gradient(135deg, var(--accent), var(--accent-2)); box-shadow: 0 0 20px var(--accent-glow); display: grid; place-items: center; font-size: 0.85rem; color: #fff; font-weight: 700; }
+  .brand .mark img { width: 100%; height: 100%; object-fit: cover; }
+  .nav-right { display: flex; align-items: center; gap: 22px; }
+  .nav-links { display: flex; gap: 24px; }
+  .nav-links a { color: var(--muted); font-size: 0.9rem; font-weight: 500; transition: color 0.3s var(--ease); }
+  .nav-links a:hover { color: var(--text); }
+  .nav-social { display: flex; align-items: center; gap: 14px; padding-left: 18px; border-left: 1px solid var(--line); }
+  .nav-social a { color: var(--muted); display: grid; place-items: center; transition: color 0.3s var(--ease), transform 0.3s var(--ease); }
+  .nav-social a:hover { color: var(--text); transform: translateY(-2px); }
+
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 26px; border-radius: 100px; font-weight: 600; font-size: 0.95rem; font-family: 'Inter', sans-serif; cursor: pointer; border: 1px solid transparent; white-space: nowrap; transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease), background 0.35s var(--ease); }
+  .btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #fff; box-shadow: 0 10px 34px -10px var(--accent-glow); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 46px -10px var(--accent-glow); }
+  .btn-ghost { background: rgba(255,255,255,0.04); border-color: var(--line-strong); color: var(--text); }
+  .btn-ghost:hover { transform: translateY(-2px); background: rgba(255,255,255,0.08); }
+
+  /* HERO (pinned scroll sequence) */
+  .hero-scroll { position: relative; height: 175vh; }
+  .hero { position: sticky; top: 0; height: 100dvh; display: grid; place-items: center; text-align: center; overflow: hidden; padding: 120px 5vw 90px; }
+  .collage { position: absolute; inset: 0; z-index: 0; overflow: hidden; filter: blur(8px) brightness(0.72) saturate(1.2); will-change: filter; }
+  .collage .tile { position: absolute; top: 0; left: 0; background-size: cover; background-position: center; background-color: #160d0f; will-change: transform; }
+  .hero-fade { position: absolute; inset: 0; z-index: 1; will-change: opacity; background:
+    radial-gradient(ellipse 55% 50% at 50% 46%, rgba(10,7,8,0.55), transparent 70%),
+    linear-gradient(180deg, rgba(10,7,8,0.5) 0%, rgba(10,7,8,0.35) 40%, rgba(10,7,8,0.7) 100%); }
+  .hero .wrap { position: relative; z-index: 2; }
+  .hero h1 { font-size: clamp(3.4rem, 12vw, 8.5rem); font-weight: 700; line-height: 0.95; letter-spacing: -0.03em; text-shadow: 0 4px 40px rgba(0,0,0,0.6); }
+  .hero h1 .glow-text { text-shadow: 0 0 70px var(--accent-glow), 0 4px 40px rgba(0,0,0,0.55); }
+  .sub, .hero-actions { text-shadow: 0 2px 20px rgba(0,0,0,0.7); }
+  .sub { margin-top: 22px; font-size: clamp(1.05rem, 2vw, 1.4rem); color: var(--muted); font-weight: 500; }
+  .sub b { color: var(--text); font-weight: 600; }
+  .rotator { position: relative; display: inline-block; vertical-align: bottom; overflow: hidden; text-align: left; transition: width 0.45s var(--ease); }
+  .rotator .rw {
+    display: inline-block; white-space: nowrap; color: var(--text); font-weight: 600;
+    background: linear-gradient(120deg, var(--accent-2), var(--accent));
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    animation: rwIn 0.5s var(--ease);
+  }
+  .rotator .rw.out { position: absolute; left: 0; top: 0; animation: rwOut 0.5s var(--ease) forwards; }
+  @keyframes rwIn { from { opacity: 0; transform: translateY(0.75em) rotateX(-70deg); } to { opacity: 1; transform: none; } }
+  @keyframes rwOut { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(-0.75em) rotateX(70deg); } }
+  .hero-actions { margin-top: 40px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .hero-stats { margin-top: 32px; display: inline-flex; align-items: center; gap: 28px; padding: 14px 30px; border-radius: 100px; background: rgba(20,14,15,0.42); border: 1px solid var(--line); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); text-shadow: none; }
+  .hero-stats > div:not(.sep) { display: flex; flex-direction: column; align-items: center; }
+  .hero-stats span { font-family: 'Space Grotesk'; font-weight: 700; font-size: clamp(1.3rem, 2.4vw, 1.7rem); line-height: 1; background: linear-gradient(120deg, var(--accent-2), var(--accent)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .hero-stats small { color: var(--muted); font-size: 0.68rem; letter-spacing: 0.09em; text-transform: uppercase; margin-top: 6px; }
+  .hero-stats .sep { width: 1px; height: 34px; background: var(--line-strong); }
+
+  /* STATS BAR */
+  .stats { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--bg-2); }
+  .stats .wrap { display: grid; grid-template-columns: repeat(3,1fr); }
+  .stat { padding: 52px 20px; text-align: center; border-right: 1px solid var(--line); }
+  .stat:last-child { border-right: none; }
+  .stat .ico { width: 44px; height: 44px; margin: 0 auto 14px; border-radius: 12px; display: grid; place-items: center; background: var(--accent-soft); border: 1px solid rgba(255,51,71,0.22); }
+  .stat .num { font-family:'Space Grotesk'; font-size: clamp(1.9rem,4vw,3rem); font-weight:700; line-height:1; }
+  .stat .num .grad { background: linear-gradient(120deg, var(--accent-2), var(--accent)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .stat .lbl { color: var(--muted); font-size: 0.92rem; margin-top: 8px; }
+
+  /* SECTION */
+  section.block { padding: 100px 0; }
+
+  /* GAMES */
+  .games-head { display: flex; align-items: center; gap: 22px; margin-bottom: 40px; }
+  .games-head h2 { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 600; font-size: clamp(1.7rem, 3.4vw, 2.6rem); letter-spacing: 0; white-space: nowrap; }
+  .games-head .rule { flex: 1; height: 1px; background: linear-gradient(90deg, var(--line-strong), transparent); }
+
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+  .gcard {
+    position: relative; display: flex; flex-direction: column;
+    border: 1px solid var(--line); border-radius: 16px; background: var(--card); overflow: hidden;
+    transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease), border-color 0.5s var(--ease);
+    will-change: transform;
+  }
+  .gcard::after { content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none; box-shadow: inset 0 0 0 1px transparent; transition: box-shadow 0.5s var(--ease); }
+  .gcard:hover { transform: translateY(-8px); border-color: transparent; box-shadow: 0 30px 60px -24px var(--accent-glow), 0 8px 24px -14px rgba(0,0,0,0.7); }
+  .gcard:hover::after { box-shadow: inset 0 0 0 1px rgba(255,51,71,0.6); }
+  .gthumb { position: relative; aspect-ratio: 1 / 1; overflow: hidden; background: linear-gradient(140deg,#2a1418,#160d0f); }
+  .gthumb img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.02); transition: transform 0.8s var(--ease), filter 0.6s var(--ease); }
+  .gcard:hover .gthumb img { transform: scale(1.1); filter: saturate(1.12); }
+  .gthumb .shine { position:absolute; inset:0; background: linear-gradient(115deg, transparent 32%, rgba(255,255,255,0.16) 48%, transparent 62%); transform: translateX(-120%); transition: transform 0.9s var(--ease); }
+  .gcard:hover .gthumb .shine { transform: translateX(120%); }
+  .gthumb .soon { position:absolute; inset:0; display:grid; place-items:center; color:rgba(255,255,255,0.65); font-family:'Space Grotesk'; font-weight:600; font-size:0.82rem; padding:0 10px; text-align:center; }
+  .gbody { padding: 14px 14px 16px; display: flex; flex-direction: column; gap: 12px; }
+  .gbody h3 { font-size: 0.98rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .gstats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .box { border: 1px solid var(--line); border-radius: 10px; background: var(--card-2); padding: 8px 11px; position: relative; }
+  .box .k { font-size: 0.6rem; letter-spacing: 0.11em; text-transform: uppercase; color: var(--muted-2); }
+  .box .v { font-family:'Space Grotesk'; font-weight:600; font-size: 0.95rem; margin-top: 2px; }
+  .box.visits .v { color: var(--accent); }
+  .box.live { cursor: help; }
+  .box.live .dot { position:absolute; top:9px; right:10px; width:6px; height:6px; border-radius:50%; background:var(--live); box-shadow:0 0 9px var(--live); animation: pulse 1.6s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.35} }
+  .box.live .tip { position:absolute; bottom: calc(100% + 10px); left: 50%; transform: translateX(-50%) translateY(6px); width: 210px; background:#221315; border:1px solid var(--line-strong); border-radius:12px; padding:11px 13px; font-size:0.78rem; color:var(--muted); text-align:left; line-height:1.45; opacity:0; visibility:hidden; transition: opacity 0.3s var(--ease), transform 0.3s var(--ease); box-shadow:0 18px 40px -14px rgba(0,0,0,0.9); z-index:6; }
+  .box.live .tip b { color: var(--live); }
+  .box.live .tip::after { content:""; position:absolute; top:100%; left:50%; transform:translateX(-50%); border:6px solid transparent; border-top-color:#221315; }
+  .box.live:hover .tip { opacity:1; visibility:visible; transform: translateX(-50%) translateY(0); }
+  .gcard.hidden { display: none; }
+  .load-wrap { text-align: center; margin-top: 40px; }
+  .status { text-align:center; color: var(--muted-2); font-size: 0.82rem; margin-top: 18px; }
+
+  /* CONTACT */
+  .cta { position: relative; overflow: hidden; }
+  .cta-inner { position: relative; border: 1px solid var(--line-strong); border-radius: 26px; background: linear-gradient(135deg, var(--bg-2), #130c0e); padding: 72px 40px; text-align: center; overflow: hidden; }
+  .cta-glow { position:absolute; top:-40%; left:50%; transform:translateX(-50%); width:700px; height:560px; background: radial-gradient(ellipse at center, var(--accent-glow), transparent 62%); filter: blur(30px); opacity:0.5; }
+  .cta-inner .wrap-in { position: relative; z-index: 2; }
+  .cta-inner h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; margin-bottom: 14px; }
+  .cta-inner h2 .grad { background: linear-gradient(120deg, var(--accent-2), var(--accent)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .cta-inner p { color: var(--muted); max-width: 460px; margin: 0 auto 30px; }
+  .cta-inner .hero-actions { justify-content: center; }
+
+  footer { border-top: 1px solid var(--line); padding: 40px 0 36px; }
+  .foot { display:flex; align-items:center; justify-content:space-between; gap: 18px; flex-wrap: wrap; }
+  .foot .copy { color: var(--muted-2); font-size: 0.85rem; }
+  .foot-links { display:flex; gap: 22px; }
+  .foot-links a { color: var(--muted); font-size: 0.88rem; transition: color 0.3s var(--ease); }
+  .foot-links a:hover { color: var(--text); }
+
+  /* toast */
+  .toast { position: fixed; left: 50%; bottom: 30px; transform: translate(-50%, 20px); z-index: 200; padding: 13px 22px; border-radius: 100px; background: rgba(20,14,15,0.92); border: 1px solid var(--line-strong); backdrop-filter: blur(12px); font-size: 0.9rem; font-weight: 500; box-shadow: 0 18px 40px -14px rgba(0,0,0,0.9); opacity: 0; visibility: hidden; transition: opacity 0.35s var(--ease), transform 0.35s var(--ease); }
+  .toast.show { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+  .toast b { color: var(--accent); }
+
+  /* REVEAL */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.8s var(--ease), transform 0.8s var(--ease); }
+  .reveal.in { opacity: 1; transform: none; }
+  .d1 { transition-delay: 0.08s; } .d2 { transition-delay: 0.16s; } .d3 { transition-delay: 0.24s; }
+
+  @media (max-width: 1100px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 860px) {
+    .nav-links, .nav-social { display: none; }
+    .collage { grid-template-columns: repeat(3,1fr); }
+    .stats .wrap { grid-template-columns: 1fr; }
+    .stat { border-right: none; border-bottom: 1px solid var(--line); padding: 34px 20px; }
+    .stat:last-child { border-bottom: none; }
+    .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    section.block { padding: 74px 0; }
+    .cta-inner { padding: 52px 24px; }
+  }
+  @media (max-width: 460px) { .grid { grid-template-columns: 1fr 1fr; } .gbody h3 { font-size: 0.9rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="#top" class="brand"><span class="mark"><img src="logo.png" alt="Aventix" onerror="this.parentElement.textContent='A'"></span>Aventix Studios</a>
+    <div class="nav-right">
+      <div class="nav-links">
+        <a href="#games">Games</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="nav-social">
+        <a href="#" class="js-discord" aria-label="Discord" title="Discord: RichFromYou"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3l-.3.5c1.7.4 2.5.9 3.4 1.5a13 13 0 0 0-10.9 0c.9-.6 1.8-1.1 3.4-1.5L10.6 3A19.8 19.8 0 0 0 5.7 4.4C2.6 9 1.8 13.4 2.2 17.8a19.9 19.9 0 0 0 6 3l.8-1.4c-.7-.3-1.4-.6-2-1l.5-.4a14.2 14.2 0 0 0 12 0l.5.4c-.6.4-1.3.7-2 1l.8 1.4a19.9 19.9 0 0 0 6-3c.5-5.1-.8-9.5-3.8-13.4ZM9 15c-.9 0-1.7-.9-1.7-2s.8-2 1.7-2 1.7.9 1.7 2-.8 2-1.7 2Zm6 0c-.9 0-1.7-.9-1.7-2s.8-2 1.7-2 1.7.9 1.7 2-.8 2-1.7 2Z"/></svg></a>
+        <a href="https://x.com/AventixPD" target="_blank" rel="noopener" aria-label="X" title="X"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2h3.3l-7.2 8.3L23.5 22h-6.6l-5.2-6.8L5.8 22H2.5l7.7-8.8L1.5 2h6.8l4.7 6.2L18.9 2Zm-1.2 18h1.8L7.4 3.8H5.5L17.7 20Z"/></svg></a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<span id="top"></span>
+
+<!-- HERO (pinned scroll sequence) -->
+<div class="hero-scroll" id="heroScroll">
+  <section class="hero">
+    <div class="collage" id="collage"></div>
+    <div class="hero-fade" id="heroFade"></div>
+    <div class="wrap">
+      <h1 class="reveal"><span class="glow-text">Aventix</span></h1>
+      <p class="sub reveal d1">We build <span class="rotator" id="rotator"><span class="rw">immersive</span></span> Roblox experiences.</p>
+      <div class="hero-actions reveal d2">
+        <a href="#games" class="btn btn-primary">View our games</a>
+        <a href="#contact" class="btn btn-ghost">Work with us</a>
+      </div>
+      <div class="hero-stats reveal d3">
+        <div><span id="heroPlaying">—</span><small>Players online now</small></div>
+        <div class="sep"></div>
+        <div><span id="heroVisits">—</span><small>Total visits</small></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="wrap">
+    <div class="stat reveal">
+      <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"/><circle cx="12" cy="12" r="3" fill="var(--accent)" stroke="none"/></svg></div>
+      <div class="num"><span class="grad" id="totVisits">—</span></div>
+      <div class="lbl">Total visits</div>
+    </div>
+    <div class="stat reveal d1">
+      <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><circle cx="9" cy="8" r="3"/><path d="M2 20a7 7 0 0 1 14 0"/><circle cx="17" cy="9" r="2.2"/></svg></div>
+      <div class="num"><span class="grad" id="totPlaying">—</span></div>
+      <div class="lbl">Players online now</div>
+    </div>
+    <div class="stat reveal d2">
+      <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="4"/><circle cx="8" cy="12" r="1.3" fill="var(--accent)"/><circle cx="16" cy="12" r="1.3" fill="var(--accent)"/></svg></div>
+      <div class="num"><span class="grad" id="gCount">—</span></div>
+      <div class="lbl">Games shipped</div>
+    </div>
+  </div>
+</section>
+
+<!-- GAMES -->
+<section class="block" id="games">
+  <div class="wrap">
+    <div class="games-head reveal"><h2>Selected games</h2><span class="rule"></span></div>
+    <div class="grid" id="grid"></div>
+    <div class="load-wrap"><button class="btn btn-ghost" id="loadMore">Load more games</button></div>
+    <div class="status" id="status">Loading live stats…</div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="block cta" id="contact">
+  <div class="wrap">
+    <div class="cta-inner reveal">
+      <div class="cta-glow"></div>
+      <div class="wrap-in">
+        <h2>Let's build something <span class="grad">big</span>.</h2>
+        <p>Got a project or an idea worth shipping? We'd love to hear it.</p>
+        <div class="hero-actions">
+          <a href="mailto:dafnxel@proton.me" class="btn btn-primary">Email us</a>
+          <a href="#" class="btn btn-ghost js-discord">Add on Discord</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <a href="#top" class="brand"><span class="mark"><img src="logo.png" alt="Aventix" onerror="this.parentElement.textContent='A'"></span>Aventix Studios</a>
+    <div class="foot-links"><a href="#games">Games</a><a href="#contact">Contact</a><a href="#" class="js-discord">Discord</a><a href="https://x.com/AventixPD" target="_blank" rel="noopener">X</a></div>
+    <div class="copy">© 2026 Aventix Studios</div>
+  </div>
+</footer>
+
+<script>
+  // Rotating hero word — container width tracks each word so trailing text glides
+  (function () {
+    const words = ['immersive', 'top-charting', 'addictive', 'viral', 'polished', 'unforgettable'];
+    const host = document.getElementById('rotator');
+    if (!host) return;
+    const measure = (txt) => {
+      const m = document.createElement('span');
+      m.className = 'rw'; m.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap';
+      m.textContent = txt; host.appendChild(m);
+      const w = m.getBoundingClientRect().width; m.remove(); return w;
+    };
+    let i = 0;
+    function start() {
+      host.style.width = measure(host.querySelector('.rw').textContent) + 'px';
+      setInterval(() => {
+        const cur = host.querySelector('.rw:not(.out)');
+        i = (i + 1) % words.length;
+        host.style.width = measure(words[i]) + 'px';   // animate container to new word's width
+        cur.classList.add('out');
+        const next = document.createElement('span');
+        next.className = 'rw'; next.textContent = words[i];
+        host.appendChild(next);
+        setTimeout(() => cur.remove(), 520);
+      }, 2200);
+    }
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(start); else start();
+  })();
+
+  // Discord username → copy to clipboard with a toast (username, not a link)
+  const DISCORD = 'RichFromYou';
+  let toastEl, toastTimer;
+  function toast(html) {
+    if (!toastEl) { toastEl = document.createElement('div'); toastEl.className = 'toast'; document.body.appendChild(toastEl); }
+    toastEl.innerHTML = html;
+    toastEl.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2600);
+  }
+  document.querySelectorAll('.js-discord').forEach((a) => a.addEventListener('click', (e) => {
+    e.preventDefault();
+    const done = () => toast('Discord username copied — <b>' + DISCORD + '</b>');
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(DISCORD).then(done, () => toast('Add me on Discord: <b>' + DISCORD + '</b>'));
+    else toast('Add me on Discord: <b>' + DISCORD + '</b>');
+  }));
+
+  const PAGE = 10;         // rows revealed per Load-more click
+  let shown = PAGE;
+
+  // --- formatting ---
+  const compact = (n) => {
+    if (n == null) return '—';
+    if (n >= 1e9) return +(n / 1e9).toFixed(1) + 'Bn+';
+    if (n >= 1e6) return +(n / 1e6).toFixed(1) + 'M+';
+    if (n >= 1e3) return +(n / 1e3).toFixed(1) + 'K+';
+    return String(n);
+  };
+  const exact = (n) => n == null ? '—' : Math.round(n).toLocaleString('en-US');
+
+  // --- hero collage: drifting tile field that locks into a grid on scroll ---
+  const collage = document.getElementById('collage');
+  const heroScroll = document.getElementById('heroScroll');
+  const heroFade = document.getElementById('heroFade');
+  const heroContent = document.querySelector('.hero .wrap');
+  const hues = [352,8,346,4,358,12,350,6,354,10,348,2,356,14,344];
+  const rand = (n) => { const s = Math.sin(n * 127.1 + 311.7) * 43758.5453; return s - Math.floor(s); }; // deterministic 0..1
+  let TILES = [], cellW = 320, cellH = 180, gap = 16, fieldW = 0, fieldH = 0, THUMBS = [];
+  let driftX = 0, driftY = 0, amount = 1;
+
+  function paintTile(tl, idx) {
+    const u = THUMBS.length ? THUMBS[idx % THUMBS.length] : null;
+    const h = hues[idx % hues.length];
+    tl.el.style.backgroundImage = u ? `url('${u}')` : `linear-gradient(140deg, hsl(${h} 60% 26%), hsl(${h+18} 55% 13%))`;
+  }
+  function layout() {
+    const vw = collage.clientWidth || window.innerWidth;
+    const vh = collage.clientHeight || window.innerHeight;
+    const across = vw < 700 ? 2 : (vw < 1100 ? 3 : 4);   // bigger tiles
+    cellW = Math.ceil(vw / across);
+    cellH = Math.round(cellW * 9 / 16);                   // 16:9
+    const cols = Math.ceil(vw / cellW) + 2;
+    const rows = Math.ceil(vh / cellH) + 2;
+    fieldW = cols * cellW; fieldH = rows * cellH;
+    collage.innerHTML = ''; TILES = [];
+    let i = 0;
+    for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+      const el = document.createElement('div'); el.className = 'tile';
+      el.style.width = (cellW + 1) + 'px'; el.style.height = (cellH + 1) + 'px'; // +1 overlap kills sub-pixel seams
+      const tl = { el, hx: c * cellW, hy: r * cellH };
+      paintTile(tl, i); collage.appendChild(el); TILES.push(tl); i++;
+    }
+  }
+  function render() {
+    const ox = driftX * amount, oy = driftY * amount;
+    for (let k = 0; k < TILES.length; k++) {
+      const tl = TILES[k];
+      let x = ((tl.hx + ox) % fieldW + fieldW) % fieldW;
+      let y = ((tl.hy + oy) % fieldH + fieldH) % fieldH;
+      tl.el.style.transform = `translate3d(${x - cellW}px, ${y - cellH}px, 0)`;
+    }
+  }
+  let last = performance.now();
+  function frame(t) {
+    const dt = Math.min((t - last) / 1000, 0.05); last = t;
+    const speed = 40;                                    // px/sec drift toward top-right
+    driftX = (driftX + speed * amount * dt) % fieldW;
+    driftY = (((driftY - speed * amount * dt) % fieldH) + fieldH) % fieldH;
+    render();
+    requestAnimationFrame(frame);
+  }
+
+  // Pinned hero sequence: scroll sets drift `amount` + blur + black overlay
+  let ticking = false;
+  function seq() {
+    ticking = false;
+    const vh = window.innerHeight;
+    const track = Math.max(heroScroll.offsetHeight - vh, 1); // scrollable distance while pinned
+    const p = Math.min(Math.max(window.scrollY / track, 0), 1);
+    const e = p * p * (3 - 2 * p); // smoothstep
+    amount = 1 - e;                                       // top: full drift/spread, bottom: locked grid
+    collage.style.filter = `blur(${(8 - e * 8).toFixed(2)}px) brightness(${(0.72 + e * 0.28).toFixed(3)}) saturate(1.2)`;
+    heroFade.style.opacity = (1 - e * 0.9).toFixed(3);   // black overlay → mostly gone
+    // hero text tweens out as you start scrolling (gone before the grid sharpens)
+    const tp = Math.min(p / 0.45, 1);                     // fully out by 45% of the sequence
+    const te = tp * tp * (3 - 2 * tp);
+    heroContent.style.opacity = (1 - te).toFixed(3);
+    heroContent.style.transform = `translateY(${(-46 * te).toFixed(1)}px)`;
+    heroContent.style.pointerEvents = te > 0.9 ? 'none' : '';
+  }
+  window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(seq); } }, { passive: true });
+  window.addEventListener('resize', () => { layout(); seq(); }, { passive: true });
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  layout(); seq(); requestAnimationFrame(frame);
+
+  // --- reveal on scroll ---
+  const io = ('IntersectionObserver' in window)
+    ? new IntersectionObserver((es) => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: 0.12, rootMargin: '0px 0px -40px 0px' })
+    : null;
+  const watch = (el) => io ? io.observe(el) : el.classList.add('in');
+  document.querySelectorAll('.reveal').forEach(watch);
+  requestAnimationFrame(() => document.querySelectorAll('.hero .reveal').forEach(el => el.classList.add('in')));
+
+  // --- count-up ---
+  const counted = new WeakSet();
+  function animateNum(el, target, fmt) {
+    if (target == null) return;
+    const dur = counted.has(el) ? 0 : 1400;
+    counted.add(el);
+    // guaranteed correct final value even if rAF is throttled (backgrounded tab)
+    setTimeout(() => { el.textContent = fmt(target); }, dur + 60);
+    if (!dur) { el.textContent = fmt(target); return; }
+    const start = performance.now();
+    (function tick(now) {
+      const p = Math.min((now - start) / dur, 1), e = 1 - Math.pow(1 - p, 3);
+      el.textContent = fmt(target * e);
+      if (p < 1) requestAnimationFrame(tick);
+    })(start);
+  }
+
+  // --- render ---
+  const grid = document.getElementById('grid');
+  const statusEl = document.getElementById('status');
+  const loadBtn = document.getElementById('loadMore');
+  let cards = [];
+
+  function renderCards(games) {
+    grid.innerHTML = '';
+    cards = games.map((g, i) => {
+      const el = document.createElement('a');
+      el.className = 'gcard reveal' + (i >= shown ? ' hidden' : '');
+      el.href = g.url; el.target = '_blank'; el.rel = 'noopener';
+      el.innerHTML = `
+        <div class="gthumb">${g.thumb ? `<img src="${g.thumb}" alt="${g.name}" loading="lazy">` : `<div class="soon">${g.name}</div>`}<span class="shine"></span></div>
+        <div class="gbody">
+          <h3 title="${g.name}">${g.name}</h3>
+          <div class="gstats">
+            <div class="box visits"><div class="k">Visits</div><div class="v">${compact(g.visits)}</div></div>
+            <div class="box live"><span class="dot"></span><div class="k">Playing</div><div class="v">${exact(g.playing)}</div>
+              <div class="tip"><b>Concurrent players</b> in this game right now. Refreshes every ~30s.</div>
+            </div>
+          </div>
+        </div>`;
+      grid.appendChild(el); watch(el);
+      return el;
+    });
+    if (shown >= games.length) loadBtn.style.display = 'none'; else loadBtn.style.display = '';
+  }
+
+  function updateCards(games) {
+    games.forEach((g, i) => {
+      const el = cards[i]; if (!el) return;
+      el.querySelector('.box.visits .v').textContent = compact(g.visits);
+      el.querySelector('.box.live .v').textContent = exact(g.playing);
+    });
+  }
+
+  loadBtn.addEventListener('click', function () {
+    shown += PAGE;
+    cards.forEach((el, i) => { if (i < shown) el.classList.remove('hidden'); });
+    if (shown >= cards.length) this.style.display = 'none';
+  });
+
+  // --- data from backend ---
+  let firstLoad = true;
+  async function load() {
+    try {
+      const r = await fetch('/api/games', { cache: 'no-store' });
+      if (!r.ok) throw new Error(r.status);
+      const d = await r.json();
+
+      if (firstLoad) {
+        renderCards(d.games);
+        // hero collage from real thumbnails
+        const urls = d.games.map(g => g.thumb).filter(Boolean);
+        if (urls.length) { THUMBS = urls; TILES.forEach((tl, i) => paintTile(tl, i)); }
+        firstLoad = false;
+      } else {
+        updateCards(d.games);
+      }
+
+      animateNum(document.getElementById('totVisits'), d.totalVisits, (v) => compact(v));
+      document.getElementById('totPlaying').textContent = exact(d.totalPlaying) + '+';
+      document.getElementById('gCount').textContent = exact(d.count);
+      document.getElementById('heroPlaying').textContent = exact(d.totalPlaying) + '+';
+      document.getElementById('heroVisits').textContent = compact(d.totalVisits);
+      statusEl.textContent = 'Live from Roblox · updated ' + new Date(d.updated).toLocaleTimeString();
+    } catch (e) {
+      statusEl.textContent = 'Could not reach the stats server — retrying…';
+    }
+  }
+
+  load();
+  setInterval(load, 30000);
+</script>
+</body>
+</html>

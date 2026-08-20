@@ -1,0 +1,13 @@
+{
+  "name": "aventix-studios",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Aventix Studios — Roblox game studio site with live stats backend",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.cjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
