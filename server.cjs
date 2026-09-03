@@ -18,10 +18,10 @@ const GAMES = [
 
 // --- Team (edit here) — `user` is the member's Roblox username, used for the avatar ---
 const TEAM = [
-  { name: "DaFnxEl",    role: "Founder & Studio Lead", blurb: "Maintains Aventix Studios and the core behind it.", user: "DaFnxEl" },
-  { name: "Syveric",    role: "Founder & Studio Lead", blurb: "Maintains Aventix Studios and the core behind it.", user: "Syveric", portfolio: "https://viken.games/" },
-  { name: "Bubushniki", role: "Founder & Studio Lead", blurb: "Maintains Aventix Studios and the core behind it.", user: "Bubushniki" },
-  { name: "Being_Built", role: "Founder & Studio Lead", blurb: "Maintains Aventix Studios and the core behind it.", user: "Being_Built" },
+  { id: "1169941746", name: "DaFnxEl",     role: "Founder & Studio Lead", blurb: "Maintains Aventix Studios and the core behind it." },
+  { id: "105519417",  name: "Syveric",     role: "Founder & Studio Lead", blurb: "Maintains Aventix Studios and the core behind it.", portfolio: "https://viken.games/" },
+  { id: "1117152954", name: "Bubushniki",  role: "Founder & Studio Lead", blurb: "Maintains Aventix Studios and the core behind it." },
+  { id: "3382361537", name: "Being_Built", role: "Founder & Studio Lead", blurb: "Maintains Aventix Studios and the core behind it." },
 ];
 
 // Try official host first, fall back to roproxy mirror
@@ -61,32 +61,20 @@ let teamCache = { time: 0, payload: null };
 const TEAM_TTL = 300000; // 5 min
 
 async function buildTeam() {
-  const usernames = [...new Set(TEAM.map(t => t.user))];
-  let users = {};
+  const ids = [...new Set(TEAM.map(t => t.id))];
+  let heads = {};
   try {
-    const d = await jPost('users', '/v1/usernames/users', { usernames, excludeBannedUsers: false });
-    d.data.forEach(u => { users[(u.requestedUsername || u.name).toLowerCase()] = u; });
+    const d = await j('thumbnails', `/v1/users/avatar-headshot?userIds=${ids.join(',')}&size=420x420&format=Png&isCircular=false`);
+    d.data.forEach(x => { if (x.imageUrl) heads[x.targetId] = x.imageUrl; });
   } catch {}
 
-  const ids = [...new Set(TEAM.map(t => { const u = users[t.user.toLowerCase()]; return u ? u.id : null; }).filter(Boolean))];
-  let heads = {};
-  if (ids.length) {
-    try {
-      const d = await j('thumbnails', `/v1/users/avatar-headshot?userIds=${ids.join(',')}&size=420x420&format=Png&isCircular=false`);
-      d.data.forEach(x => { if (x.imageUrl) heads[x.targetId] = x.imageUrl; });
-    } catch {}
-  }
-
-  const members = TEAM.map(t => {
-    const u = users[t.user.toLowerCase()];
-    return {
-      name: t.name || (u ? u.displayName : t.user),
-      role: t.role,
-      blurb: t.blurb,
-      avatar: u && heads[u.id] ? heads[u.id] : null,
-      profile: t.portfolio || (u ? `https://www.roblox.com/users/${u.id}/profile` : null),
-    };
-  });
+  const members = TEAM.map(t => ({
+    name: t.name,
+    role: t.role,
+    blurb: t.blurb,
+    avatar: heads[t.id] || null,
+    profile: t.portfolio || `https://www.roblox.com/users/${t.id}/profile`,
+  }));
   return { members };
 }
 
