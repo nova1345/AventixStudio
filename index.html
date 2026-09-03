@@ -100,6 +100,18 @@
   /* SECTION */
   section.block { padding: 100px 0; }
 
+  /* BEFORE / AFTER SLIDER */
+  .ba { position: relative; width: 100%; aspect-ratio: 3 / 1; border-radius: 18px; overflow: hidden; border: 1px solid var(--line); user-select: none; -webkit-user-select: none; touch-action: none; cursor: ew-resize; --pos: 50%; background: #0f0a0b; }
+  .ba img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: fill; display: block; pointer-events: none; -webkit-user-drag: none; }
+  .ba .before { clip-path: inset(0 calc(100% - var(--pos)) 0 0); }
+  .ba .line { position: absolute; top: 0; bottom: 0; left: var(--pos); width: 2px; background: rgba(255,255,255,0.92); transform: translateX(-1px); box-shadow: 0 0 14px rgba(0,0,0,0.7); }
+  .ba .handle { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 46px; height: 46px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent-2)); display: grid; place-items: center; color: #fff; box-shadow: 0 6px 22px -4px var(--accent-glow); transition: transform 0.25s var(--ease); }
+  .ba:active .handle { transform: translate(-50%,-50%) scale(1.08); }
+  .ba .tag { position: absolute; top: 14px; padding: 6px 14px; border-radius: 100px; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; background: rgba(10,7,8,0.72); border: 1px solid var(--line-strong); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+  .ba .tag.l { left: 14px; color: var(--muted); }
+  .ba .tag.r { right: 14px; color: #8ef0b0; }
+  .ba-caption { text-align: center; color: var(--muted-2); font-size: 0.85rem; margin-top: 16px; }
+
   /* GAMES */
   .games-head { display: flex; align-items: center; gap: 22px; margin-bottom: 40px; }
   .games-head h2 { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 600; font-size: clamp(1.7rem, 3.4vw, 2.6rem); letter-spacing: 0; white-space: nowrap; }
@@ -139,6 +151,19 @@
   .load-wrap { text-align: center; margin-top: 40px; }
   .status { text-align:center; color: var(--muted-2); font-size: 0.82rem; margin-top: 18px; }
 
+  /* TEAM */
+  .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .tcard { display: block; border: 1px solid var(--line); border-radius: 18px; background: var(--card); overflow: hidden; transition: transform 0.5s var(--ease), border-color 0.5s var(--ease), box-shadow 0.5s var(--ease); }
+  .tcard:hover { transform: translateY(-7px); border-color: transparent; box-shadow: 0 30px 60px -24px var(--accent-glow), 0 8px 24px -14px rgba(0,0,0,0.7); }
+  .tcard .pic { position: relative; aspect-ratio: 1 / 1; overflow: hidden; display: grid; place-items: end center; background: radial-gradient(circle at 50% 38%, rgba(255,51,71,0.5), rgba(255,106,74,0.14) 45%, #140c0e 72%); }
+  .tcard .pic img { width: 100%; height: 100%; object-fit: contain; object-position: bottom center; filter: drop-shadow(0 12px 22px rgba(0,0,0,0.5)); transition: transform 0.6s var(--ease); }
+  .tcard:hover .pic img { transform: scale(1.06); }
+  .tcard .pic .ph { color: rgba(255,255,255,0.5); }
+  .tcard .info { padding: 18px 20px 22px; }
+  .tcard .info h3 { font-size: 1.15rem; font-weight: 600; }
+  .tcard .info .role { color: var(--accent); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; margin-top: 4px; }
+  .tcard .info p { color: var(--muted); font-size: 0.88rem; margin-top: 11px; }
+
   /* CONTACT */
   .cta { position: relative; overflow: hidden; }
   .cta-inner { position: relative; border: 1px solid var(--line-strong); border-radius: 26px; background: linear-gradient(135deg, var(--bg-2), #130c0e); padding: 72px 40px; text-align: center; overflow: hidden; }
@@ -166,7 +191,7 @@
   .reveal.in { opacity: 1; transform: none; }
   .d1 { transition-delay: 0.08s; } .d2 { transition-delay: 0.16s; } .d3 { transition-delay: 0.24s; }
 
-  @media (max-width: 1100px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 1100px) { .grid { grid-template-columns: repeat(3, 1fr); } .team-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 860px) {
     .nav-links, .nav-social { display: none; }
     .collage { grid-template-columns: repeat(3,1fr); }
@@ -174,6 +199,7 @@
     .stat { border-right: none; border-bottom: 1px solid var(--line); padding: 34px 20px; }
     .stat:last-child { border-bottom: none; }
     .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .team-grid { grid-template-columns: repeat(2, 1fr); }
     section.block { padding: 74px 0; }
     .cta-inner { padding: 52px 24px; }
   }
@@ -242,6 +268,21 @@
   </div>
 </section>
 
+<!-- BEFORE / AFTER -->
+<section class="block" id="results" style="padding-bottom:0;">
+  <div class="wrap">
+    <div class="games-head reveal"><h2>Before &amp; after</h2><span class="rule"></span></div>
+    <div class="ba reveal" id="ba">
+      <img class="after" src="after.png" alt="After" onerror="var s=document.getElementById('results'); if(s) s.style.display='none';">
+      <img class="before" src="before.png" alt="Before" draggable="false">
+      <div class="line"><div class="handle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l-4 6 4 6M15 6l4 6-4 6"/></svg></div></div>
+      <span class="tag l">Before</span>
+      <span class="tag r">After</span>
+    </div>
+    <div class="ba-caption reveal">Analytics achieved on the same game by Aventix Studios · <span style="opacity:.65">drag to compare</span></div>
+  </div>
+</section>
+
 <!-- GAMES -->
 <section class="block" id="games">
   <div class="wrap">
@@ -249,6 +290,18 @@
     <div class="grid" id="grid"></div>
     <div class="load-wrap"><button class="btn btn-ghost" id="loadMore">Load more games</button></div>
     <div class="status" id="status">Loading live stats…</div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="block" id="team" style="background:var(--bg-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+  <div class="wrap">
+    <div class="sec-head center reveal" style="max-width:640px; margin:0 auto 46px;">
+      <span class="eyebrow">The studio</span>
+      <h2>Meet the <span class="grad">team</span>.</h2>
+      <p>The people building Aventix — scripters, artists and designers who ship.</p>
+    </div>
+    <div class="team-grid" id="teamGrid"></div>
   </div>
 </section>
 
@@ -304,6 +357,27 @@
       }, 2200);
     }
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(start); else start();
+  })();
+
+  // Before/after comparison slider (drag)
+  (function () {
+    const ba = document.getElementById('ba');
+    if (!ba) return;
+    // lock the box to the after image's real ratio so neither image is stretched or clipped
+    const afterImg = ba.querySelector('.after');
+    const setAR = () => { if (afterImg.naturalWidth) ba.style.aspectRatio = afterImg.naturalWidth + ' / ' + afterImg.naturalHeight; };
+    afterImg.complete ? setAR() : afterImg.addEventListener('load', setAR);
+    let dragging = false;
+    function setPos(clientX) {
+      const r = ba.getBoundingClientRect();
+      let p = ((clientX - r.left) / r.width) * 100;
+      p = Math.max(2, Math.min(98, p));
+      ba.style.setProperty('--pos', p + '%');
+    }
+    ba.addEventListener('pointerdown', (e) => { dragging = true; try { ba.setPointerCapture(e.pointerId); } catch {} setPos(e.clientX); });
+    ba.addEventListener('pointermove', (e) => { if (dragging) setPos(e.clientX); });
+    window.addEventListener('pointerup', () => { dragging = false; });
+    ba.addEventListener('pointercancel', () => { dragging = false; });
   })();
 
   // Discord username → copy to clipboard with a toast (username, not a link)
@@ -497,12 +571,17 @@
         updateCards(d.games);
       }
 
-      animateNum(document.getElementById('totVisits'), d.totalVisits, (v) => compact(v));
-      document.getElementById('totPlaying').textContent = exact(d.totalPlaying) + '+';
       document.getElementById('gCount').textContent = exact(d.count);
-      document.getElementById('heroPlaying').textContent = exact(d.totalPlaying) + '+';
-      document.getElementById('heroVisits').textContent = compact(d.totalVisits);
-      statusEl.textContent = 'Live from Roblox · updated ' + new Date(d.updated).toLocaleTimeString();
+      if (d.resolved > 0) {
+        animateNum(document.getElementById('totVisits'), d.totalVisits, (v) => compact(v));
+        document.getElementById('totPlaying').textContent = exact(d.totalPlaying) + '+';
+        document.getElementById('heroPlaying').textContent = exact(d.totalPlaying) + '+';
+        document.getElementById('heroVisits').textContent = compact(d.totalVisits);
+        statusEl.textContent = 'Live from Roblox · updated ' + new Date(d.updated).toLocaleTimeString();
+      } else {
+        ['totVisits','totPlaying','heroPlaying','heroVisits'].forEach(id => document.getElementById(id).textContent = '—');
+        statusEl.textContent = 'Waiting for Roblox stats…';
+      }
     } catch (e) {
       statusEl.textContent = 'Could not reach the stats server — retrying…';
     }
@@ -510,6 +589,28 @@
 
   load();
   setInterval(load, 30000);
+
+  // --- team ---
+  async function loadTeam() {
+    const grid = document.getElementById('teamGrid');
+    if (!grid) return;
+    try {
+      const r = await fetch('/api/team', { cache: 'no-store' });
+      if (!r.ok) throw new Error(r.status);
+      const d = await r.json();
+      grid.innerHTML = '';
+      d.members.forEach((m) => {
+        const el = document.createElement(m.profile ? 'a' : 'div');
+        el.className = 'tcard reveal';
+        if (m.profile) { el.href = m.profile; el.target = '_blank'; el.rel = 'noopener'; }
+        el.innerHTML = `
+          <div class="pic">${m.avatar ? `<img src="${m.avatar}" alt="${m.name}" loading="lazy">` : '<span class="ph">Avatar</span>'}</div>
+          <div class="info"><h3>${m.name}</h3><div class="role">${m.role}</div><p>${m.blurb}</p></div>`;
+        grid.appendChild(el); watch(el);
+      });
+    } catch (e) { /* leave section empty on failure */ }
+  }
+  loadTeam();
 </script>
 </body>
 </html>

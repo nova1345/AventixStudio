@@ -10,11 +10,18 @@ const ROOT = __dirname;
 const GAMES = [
   { name: "My Nuke Farm",              placeId: "123042384638400" },
   { name: "1 Speed ASMR Escape",       placeId: "108914645067573" },
-  { name: "Arm Wars",                  placeId: "99768864667481" },
-  { name: "Last Word",                 placeId: "117591961586835" },
   { name: "NPC Battle Arena",          placeId: "70687173496438" },
-  { name: "Climb Scary Pirate Clark Tower", placeId: "92026803113103" },
   { name: "Build A Buddy",             placeId: "18808541784" },
+  { name: "Rain to Grow",              placeId: "138282251986725" },
+  { name: "Where Am I",                placeId: "123243055683524" },
+];
+
+// --- Team (edit here) — `user` is the member's Roblox username, used for the avatar ---
+const TEAM = [
+  { name: "DaFnxEl",    role: "Founder & Studio Lead", blurb: "Maintains Aventix Studios and the core behind it.", user: "DaFnxEl" },
+  { name: "Syveric",    role: "Founder & Studio Lead", blurb: "Maintains Aventix Studios and the core behind it.", user: "Syveric", portfolio: "https://viken.games/" },
+  { name: "Bubushniki", role: "Founder & Studio Lead", blurb: "Maintains Aventix Studios and the core behind it.", user: "Bubushniki" },
+  { name: "Being_Built", role: "Founder & Studio Lead", blurb: "Maintains Aventix Studios and the core behind it.", user: "Being_Built" },
 ];
 
 // Try official host first, fall back to roproxy mirror
@@ -32,6 +39,63 @@ async function j(sub, pathAndQuery) {
     } catch (e) { lastErr = e; }
   }
   throw lastErr;
+}
+
+async function jPost(sub, pathOnly, body) {
+  let lastErr;
+  for (const host of HOSTS) {
+    try {
+      const r = await fetch(`https://${sub}.${host}${pathOnly}`, {
+        method: 'POST',
+        headers: { 'accept': 'application/json', 'content-type': 'application/json', 'user-agent': 'Mozilla/5.0 AventixSite' },
+        body: JSON.stringify(body),
+      });
+      if (!r.ok) throw new Error(`${r.status}`);
+      return await r.json();
+    } catch (e) { lastErr = e; }
+  }
+  throw lastErr;
+}
+
+let teamCache = { time: 0, payload: null };
+const TEAM_TTL = 300000; // 5 min
+
+async function buildTeam() {
+  const usernames = [...new Set(TEAM.map(t => t.user))];
+  let users = {};
+  try {
+    const d = await jPost('users', '/v1/usernames/users', { usernames, excludeBannedUsers: false });
+    d.data.forEach(u => { users[(u.requestedUsername || u.name).toLowerCase()] = u; });
+  } catch {}
+
+  const ids = [...new Set(TEAM.map(t => { const u = users[t.user.toLowerCase()]; return u ? u.id : null; }).filter(Boolean))];
+  let heads = {};
+  if (ids.length) {
+    try {
+      const d = await j('thumbnails', `/v1/users/avatar-headshot?userIds=${ids.join(',')}&size=420x420&format=Png&isCircular=false`);
+      d.data.forEach(x => { if (x.imageUrl) heads[x.targetId] = x.imageUrl; });
+    } catch {}
+  }
+
+  const members = TEAM.map(t => {
+    const u = users[t.user.toLowerCase()];
+    return {
+      name: t.name || (u ? u.displayName : t.user),
+      role: t.role,
+      blurb: t.blurb,
+      avatar: u && heads[u.id] ? heads[u.id] : null,
+      profile: t.portfolio || (u ? `https://www.roblox.com/users/${u.id}/profile` : null),
+    };
+  });
+  return { members };
+}
+
+async function getTeam() {
+  const now = Date.now();
+  if (teamCache.payload && now - teamCache.time < TEAM_TTL) return teamCache.payload;
+  const payload = await buildTeam();
+  teamCache = { time: now, payload };
+  return payload;
 }
 
 const universeCache = new Map(); // placeId -> universeId (permanent)
@@ -99,6 +163,18 @@ const server = http.createServer(async (req, res) => {
   if (url === '/api/games') {
     try {
       const data = await getStats();
+      res.writeHead(200, { 'content-type': 'application/json', 'cache-control': 'no-store' });
+      res.end(JSON.stringify(data));
+    } catch (e) {
+      res.writeHead(502, { 'content-type': 'application/json' });
+      res.end(JSON.stringify({ error: 'upstream', message: String(e) }));
+    }
+    return;
+  }
+
+  if (url === '/api/team') {
+    try {
+      const data = await getTeam();
       res.writeHead(200, { 'content-type': 'application/json', 'cache-control': 'no-store' });
       res.end(JSON.stringify(data));
     } catch (e) {
