@@ -553,13 +553,69 @@
     if (shown >= cards.length) this.style.display = 'none';
   });
 
-  // --- data from backend ---
+  // ==========================================================================
+  // Data source. When served by server.cjs, /api/* answers. On a static host
+  // (e.g. GitHub Pages) those 404, so we fetch Roblox directly via RoProxy.
+  // Keep GAMES_CFG / TEAM_CFG in sync with server.cjs.
+  // ==========================================================================
+  const PXY = 'roproxy.com';
+  const GAMES_CFG = [
+    { name: "My Nuke Farm",        placeId: "123042384638400" },
+    { name: "1 Speed ASMR Escape", placeId: "108914645067573" },
+    { name: "NPC Battle Arena",    placeId: "70687173496438" },
+    { name: "Build A Buddy",       placeId: "18808541784" },
+    { name: "Rain to Grow",        placeId: "138282251986725" },
+    { name: "Where Am I",          placeId: "123243055683524" },
+  ];
+  const TEAM_CFG = [
+    { name: "DaFnxEl",     role: "Founder & Studio Lead", blurb: "Maintains Aventix Studios and the core behind it.", user: "DaFnxEl" },
+    { name: "Syveric",     role: "Founder & Studio Lead", blurb: "Maintains Aventix Studios and the core behind it.", user: "Syveric", portfolio: "https://viken.games/" },
+    { name: "Bubushniki",  role: "Founder & Studio Lead", blurb: "Maintains Aventix Studios and the core behind it.", user: "Bubushniki" },
+    { name: "Being_Built", role: "Founder & Studio Lead", blurb: "Maintains Aventix Studios and the core behind it.", user: "Being_Built" },
+  ];
+  const cj = async (u, opt) => { const r = await fetch(u, opt); if (!r.ok) throw new Error(r.status); return r.json(); };
+
+  async function clientGames() {
+    await Promise.all(GAMES_CFG.map(async g => { if (!g.universeId) { try { const d = await cj(`https://apis.${PXY}/universes/v1/places/${g.placeId}/universe`); g.universeId = d.universeId; } catch {} } }));
+    const ids = GAMES_CFG.filter(g => g.universeId).map(g => g.universeId);
+    const stats = {}, thumbs = {};
+    if (ids.length) {
+      try { const d = await cj(`https://games.${PXY}/v1/games?universeIds=${ids.join(',')}`); d.data.forEach(x => stats[x.id] = x); } catch {}
+      try { const d = await cj(`https://thumbnails.${PXY}/v1/games/multiget/thumbnails?universeIds=${ids.join(',')}&countPerUniverse=1&defaultRowSize=1&size=768x432&format=Png&isCircular=false`); d.data.forEach(x => { if (x.thumbnails && x.thumbnails[0] && x.thumbnails[0].imageUrl) thumbs[x.universeId] = x.thumbnails[0].imageUrl; }); } catch {}
+    }
+    let tv = 0, tp = 0, res = 0;
+    const games = GAMES_CFG.map(g => {
+      const s = stats[g.universeId];
+      if (s) { tv += s.visits || 0; tp += s.playing || 0; res++; }
+      return { name: (s && s.name) || g.name, placeId: g.placeId, visits: s ? (s.visits || 0) : null, playing: s ? (s.playing || 0) : null, thumb: thumbs[g.universeId] || null, url: `https://www.roblox.com/games/${g.placeId}` };
+    });
+    games.sort((a, b) => (b.playing || 0) - (a.playing || 0));
+    return { updated: Date.now(), count: GAMES_CFG.length, resolved: res, totalVisits: tv, totalPlaying: tp, games };
+  }
+
+  async function clientTeam() {
+    const usernames = [...new Set(TEAM_CFG.map(t => t.user))];
+    let users = {};
+    try {
+      const d = await cj(`https://users.${PXY}/v1/usernames/users`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ usernames, excludeBannedUsers: false }) });
+      d.data.forEach(u => { users[(u.requestedUsername || u.name).toLowerCase()] = u; });
+    } catch {}
+    const ids = [...new Set(TEAM_CFG.map(t => { const u = users[t.user.toLowerCase()]; return u ? u.id : null; }).filter(Boolean))];
+    const heads = {};
+    if (ids.length) { try { const d = await cj(`https://thumbnails.${PXY}/v1/users/avatar-headshot?userIds=${ids.join(',')}&size=420x420&format=Png&isCircular=false`); d.data.forEach(x => { if (x.imageUrl) heads[x.targetId] = x.imageUrl; }); } catch {} }
+    const members = TEAM_CFG.map(t => { const u = users[t.user.toLowerCase()]; return { name: t.name || (u ? u.displayName : t.user), role: t.role, blurb: t.blurb, avatar: u && heads[u.id] ? heads[u.id] : null, profile: t.portfolio || (u ? `https://www.roblox.com/users/${u.id}/profile` : null) }; });
+    return { members };
+  }
+
+  // Try the backend first; fall back to direct RoProxy fetches (static hosting)
+  async function fetchGames() { try { const r = await fetch('/api/games', { cache: 'no-store' }); if (!r.ok) throw 0; return await r.json(); } catch { return clientGames(); } }
+  async function fetchTeam()  { try { const r = await fetch('/api/team',  { cache: 'no-store' }); if (!r.ok) throw 0; return await r.json(); } catch { return clientTeam(); } }
+
+  // --- data ---
   let firstLoad = true;
   async function load() {
     try {
-      const r = await fetch('/api/games', { cache: 'no-store' });
-      if (!r.ok) throw new Error(r.status);
-      const d = await r.json();
+      const d = await fetchGames();
 
       if (firstLoad) {
         renderCards(d.games);
@@ -595,9 +651,7 @@
     const grid = document.getElementById('teamGrid');
     if (!grid) return;
     try {
-      const r = await fetch('/api/team', { cache: 'no-store' });
-      if (!r.ok) throw new Error(r.status);
-      const d = await r.json();
+      const d = await fetchTeam();
       grid.innerHTML = '';
       d.members.forEach((m) => {
         const el = document.createElement(m.profile ? 'a' : 'div');
