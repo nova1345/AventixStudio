@@ -657,6 +657,16 @@
   async function fetchTeam()  { try { const r = await fetch('/api/team',  { cache: 'no-store' }); if (!r.ok) throw 0; return await r.json(); } catch { return clientTeam(); } }
 
   // --- games data ---
+  function applyTotals(d) {
+    if (d.count != null) document.getElementById('gCount').textContent = exact(d.count);
+    if (d.resolved > 0 || d.totalVisits > 0) {
+      animateNum(document.getElementById('totVisits'), d.totalVisits, (v) => compact(v));
+      document.getElementById('totPlaying').textContent = exact(d.totalPlaying) + '+';
+      document.getElementById('heroPlaying').textContent = exact(d.totalPlaying) + '+';
+      document.getElementById('heroVisits').textContent = compact(d.totalVisits);
+    }
+  }
+
   async function load() {
     let d;
     try { d = await fetchGames(); }
@@ -664,22 +674,32 @@
     applyGames(d);
     const urls = d.games.map(g => g.thumb).filter(Boolean);
     if (urls.length) { THUMBS = urls; TILES.forEach((tl, i) => paintTile(tl, i)); }
-    document.getElementById('gCount').textContent = exact(d.count);
     if (d.resolved > 0) {
-      animateNum(document.getElementById('totVisits'), d.totalVisits, (v) => compact(v));
-      document.getElementById('totPlaying').textContent = exact(d.totalPlaying) + '+';
-      document.getElementById('heroPlaying').textContent = exact(d.totalPlaying) + '+';
-      document.getElementById('heroVisits').textContent = compact(d.totalVisits);
+      applyTotals(d);
       statusEl.textContent = 'Live from Roblox · updated ' + new Date(d.updated).toLocaleTimeString();
     } else {
-      statusEl.textContent = 'Reconnecting to Roblox…';
-      setTimeout(load, 4000); // nothing resolved this time — try again soon
+      setTimeout(load, 4000); // nothing resolved this time — try again soon (baseline still shown)
     }
   }
-  renderSkeleton();
-  document.getElementById('gCount').textContent = exact(GAMES_CFG.length);
-  load();
-  setInterval(load, 30000);
+
+  // Reliable baseline: data.json is committed by a GitHub Action every ~15 min and served
+  // by the CDN (no proxy, never rate-limited). Cached in localStorage for repeat visits.
+  // The live RoProxy refresh runs on top; if it fails, these values stay — so it never blanks.
+  async function loadBaseline() {
+    let d = null;
+    try {
+      const r = await fetch('data.json', { cache: 'no-store' });
+      if (r.ok) { d = await r.json(); try { localStorage.setItem('aventix_data', JSON.stringify(d)); } catch {} }
+    } catch {}
+    if (!d) { try { d = JSON.parse(localStorage.getItem('aventix_data') || 'null'); } catch {} }
+    if (!d) return;
+    applyGames(d);
+    applyTotals(d);
+    const urls = (d.games || []).map(g => g.thumb).filter(Boolean);
+    if (urls.length) { THUMBS = urls; TILES.forEach((tl, i) => paintTile(tl, i)); }
+    if (d.team) applyTeamAvatars(d.team);
+    statusEl.textContent = 'Live from Roblox';
+  }
 
   // --- team ---
   const teamGrid = document.getElementById('teamGrid');
@@ -706,6 +726,13 @@
     img.onload = () => { pic.querySelector('.ph')?.remove(); pic.insertBefore(img, pic.firstChild); };
     img.src = url;
   }
+  function applyTeamAvatars(members) {
+    if (!teamGrid) return;
+    members.forEach(m => {
+      const el = teamGrid.querySelector(`.tcard[data-uid="${m.id}"]`);
+      if (el && m.avatar) setAvatar(el, m.avatar, m.name);
+    });
+  }
   let teamTries = 0;
   async function loadTeam() {
     if (!teamGrid) return;
@@ -719,8 +746,13 @@
     });
     if (missing && teamTries++ < 12) setTimeout(loadTeam, 3000); // keep retrying until every avatar loads
   }
+
+  // ---- init: skeletons instantly → reliable data.json baseline → live refresh on top ----
+  renderSkeleton();
   renderTeamSkeleton();
-  loadTeam();
+  document.getElementById('gCount').textContent = exact(GAMES_CFG.length);
+  loadBaseline().then(() => { load(); loadTeam(); });
+  setInterval(load, 30000);
 </script>
 </body>
 </html>

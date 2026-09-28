@@ -6,25 +6,8 @@ const path = require('path');
 const PORT = process.env.PORT || 3000;
 const ROOT = __dirname;
 
-// --- Portfolio (edit here) ---
-const GAMES = [
-  { name: "My Nuke Farm",              placeId: "123042384638400" },
-  { name: "1 Speed ASMR Escape",       placeId: "108914645067573" },
-  { name: "NPC Battle Arena",          placeId: "70687173496438" },
-  { name: "Build A Buddy",             placeId: "18808541784" },
-  { name: "Rain to Grow",              placeId: "138282251986725" },
-  { name: "Where Am I",                placeId: "123243055683524" },
-  { name: "My Gas Station",            placeId: "132942260607514" },
-  { name: "Own a Grocery Store",       placeId: "117985153726741" },
-];
-
-// --- Team (edit here) — `user` is the member's Roblox username, used for the avatar ---
-const TEAM = [
-  { id: "1169941746", name: "DaFnxEl",     role: "Founder & Studio Lead", blurb: "Maintains Aventix Studios and the core behind it." },
-  { id: "105519417",  name: "Syveric",     role: "Founder & Studio Lead", blurb: "Maintains Aventix Studios and the core behind it.", portfolio: "https://viken.games/" },
-  { id: "1117152954", name: "Bubushniki",  role: "Founder & Studio Lead", blurb: "Maintains Aventix Studios and the core behind it." },
-  { id: "3382361537", name: "Being_Built", role: "Founder & Studio Lead", blurb: "Maintains Aventix Studios and the core behind it." },
-];
+// --- Portfolio + team live in config.cjs (shared with the CI stats builder) ---
+const { GAMES, TEAM } = require('./config.cjs');
 
 // Try official host first, fall back to roproxy mirror
 const HOSTS = ['roblox.com', 'roproxy.com'];
