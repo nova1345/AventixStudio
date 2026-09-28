@@ -15,6 +15,7 @@ const GAMES = [
   { name: "Rain to Grow",              placeId: "138282251986725" },
   { name: "Where Am I",                placeId: "123243055683524" },
   { name: "My Gas Station",            placeId: "132942260607514" },
+  { name: "Own a Grocery Store",       placeId: "117985153726741" },
 ];
 
 // --- Team (edit here) — `user` is the member's Roblox username, used for the avatar ---
