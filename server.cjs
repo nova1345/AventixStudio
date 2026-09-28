@@ -71,6 +71,7 @@ async function buildTeam() {
   } catch {}
 
   const members = TEAM.map(t => ({
+    id: t.id,
     name: t.name,
     role: t.role,
     blurb: t.blurb,

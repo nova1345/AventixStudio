@@ -516,42 +516,70 @@
   const loadBtn = document.getElementById('loadMore');
   let cards = [];
 
-  function renderCards(games) {
-    grid.innerHTML = '';
-    cards = games.map((g, i) => {
+  const cardByPlace = {};   // placeId -> card element (stats matched by this, never by index)
+  let listSorted = false;
+
+  function applyHidden() {
+    cards.forEach((el, i) => el.classList.toggle('hidden', i >= shown));
+    loadBtn.style.display = shown >= cards.length ? 'none' : '';
+  }
+
+  // Render all cards immediately from config (names always visible, stats fill in later)
+  function renderSkeleton() {
+    grid.innerHTML = ''; cards = [];
+    GAMES_CFG.forEach((g, i) => {
       const el = document.createElement('a');
-      el.className = 'gcard reveal' + (i >= shown ? ' hidden' : '');
-      el.href = g.url; el.target = '_blank'; el.rel = 'noopener';
+      el.className = 'gcard reveal';
+      el.href = `https://www.roblox.com/games/${g.placeId}`; el.target = '_blank'; el.rel = 'noopener';
+      el.dataset.place = g.placeId;
       el.innerHTML = `
-        <div class="gthumb">${g.thumb ? `<img src="${g.thumb}" alt="${g.name}" loading="lazy">` : `<div class="soon">${g.name}</div>`}<span class="shine"></span></div>
+        <div class="gthumb"><span class="shine"></span></div>
         <div class="gbody">
           <h3 title="${g.name}">${g.name}</h3>
           <div class="gstats">
-            <div class="box visits"><div class="k">Visits</div><div class="v">${compact(g.visits)}</div></div>
-            <div class="box live"><span class="dot"></span><div class="k">Playing</div><div class="v">${exact(g.playing)}</div>
+            <div class="box visits"><div class="k">Visits</div><div class="v">—</div></div>
+            <div class="box live"><span class="dot"></span><div class="k">Playing</div><div class="v">—</div>
               <div class="tip"><b>Concurrent players</b> in this game right now. Refreshes every ~30s.</div>
             </div>
           </div>
         </div>`;
-      grid.appendChild(el); watch(el);
-      return el;
+      const hue = 352 + (i * 9) % 24;
+      el.querySelector('.gthumb').style.background = `linear-gradient(140deg, hsl(${hue} 55% 24%), hsl(${hue + 18} 50% 13%))`;
+      grid.appendChild(el); watch(el); cards.push(el); cardByPlace[g.placeId] = el;
     });
-    if (shown >= games.length) loadBtn.style.display = 'none'; else loadBtn.style.display = '';
+    applyHidden();
   }
 
-  function updateCards(games) {
-    games.forEach((g, i) => {
-      const el = cards[i]; if (!el) return;
-      el.querySelector('.box.visits .v').textContent = compact(g.visits);
-      el.querySelector('.box.live .v').textContent = exact(g.playing);
+  // Load a thumbnail into a card, retrying the image itself on failure
+  function setThumb(el, url, name) {
+    const th = el.querySelector('.gthumb');
+    if (!url || th.querySelector('img')) return;
+    const img = new Image(); img.alt = name; img.loading = 'lazy';
+    let tries = 0;
+    img.onerror = () => { if (tries++ < 3) setTimeout(() => { img.src = url + (url.includes('?') ? '&' : '?') + '_r=' + tries; }, 600 * tries); };
+    img.onload = () => { th.insertBefore(img, th.firstChild); };
+    img.src = url;
+  }
+
+  // Apply stats to cards — MATCHED BY placeId, so a game can never show another's numbers.
+  // Only overwrites a value when the new one is real (keeps last-good on partial failures).
+  function applyGames(d) {
+    if (!listSorted && d.games.some(g => g.playing != null)) {
+      listSorted = true; // reorder DOM once to CCU order (server/client already sorted d.games)
+      d.games.forEach(g => { const el = cardByPlace[g.placeId]; if (el) grid.appendChild(el); });
+      cards = d.games.map(g => cardByPlace[g.placeId]).filter(Boolean);
+      applyHidden();
+    }
+    d.games.forEach(g => {
+      const el = cardByPlace[g.placeId]; if (!el) return;
+      if (g.name) { const h = el.querySelector('h3'); h.textContent = g.name; h.title = g.name; }
+      if (g.visits != null) el.querySelector('.box.visits .v').textContent = compact(g.visits);
+      if (g.playing != null) el.querySelector('.box.live .v').textContent = exact(g.playing);
+      if (g.thumb) setThumb(el, g.thumb, g.name);
     });
   }
 
-  loadBtn.addEventListener('click', function () {
-    shown += PAGE;
-    cards.forEach((el, i) => { if (i < shown) el.classList.remove('hidden'); });
-    if (shown >= cards.length) this.style.display = 'none';
-  });
+  loadBtn.addEventListener('click', function () { shown += PAGE; applyHidden(); });
 
   // ==========================================================================
   // Data source. When served by server.cjs, /api/* answers. On a static host
@@ -577,17 +605,35 @@
   ];
   const cj = async (u, opt) => { const r = await fetch(u, opt); if (!r.ok) throw new Error(r.status); return r.json(); };
 
+  // Fetch with retry + backoff — retries 429s and 5xx (RoProxy rate-limits intermittently)
+  async function cjRetry(url, opt, tries = 6) {
+    let delay = 500;
+    for (let i = 0; i < tries; i++) {
+      try {
+        const r = await fetch(url, opt);
+        if (r.status === 429 || r.status >= 500) throw new Error(String(r.status));
+        if (!r.ok) throw new Error(String(r.status));
+        return await r.json();
+      } catch (e) {
+        if (i === tries - 1) throw e;
+        await new Promise(res => setTimeout(res, delay));
+        delay = Math.min(Math.round(delay * 1.7), 4000);
+      }
+    }
+  }
+
   async function clientGames() {
-    await Promise.all(GAMES_CFG.map(async g => { if (!g.universeId) { try { const d = await cj(`https://apis.${PXY}/universes/v1/places/${g.placeId}/universe`); g.universeId = d.universeId; } catch {} } }));
+    // universeIds are baked into GAMES_CFG, so we skip the rate-limited apis lookup
+    await Promise.all(GAMES_CFG.map(async g => { if (!g.universeId) { try { const d = await cjRetry(`https://apis.${PXY}/universes/v1/places/${g.placeId}/universe`); g.universeId = d.universeId; } catch {} } }));
     const ids = GAMES_CFG.filter(g => g.universeId).map(g => g.universeId);
     const stats = {}, thumbs = {};
     if (ids.length) {
-      try { const d = await cj(`https://games.${PXY}/v1/games?universeIds=${ids.join(',')}`); d.data.forEach(x => stats[x.id] = x); } catch {}
-      try { const d = await cj(`https://thumbnails.${PXY}/v1/games/multiget/thumbnails?universeIds=${ids.join(',')}&countPerUniverse=1&defaultRowSize=1&size=768x432&format=Png&isCircular=false`); d.data.forEach(x => { if (x.thumbnails && x.thumbnails[0] && x.thumbnails[0].imageUrl) thumbs[x.universeId] = x.thumbnails[0].imageUrl; }); } catch {}
+      try { const d = await cjRetry(`https://games.${PXY}/v1/games?universeIds=${ids.join(',')}`); d.data.forEach(x => stats[x.id] = x); } catch {}
+      try { const d = await cjRetry(`https://thumbnails.${PXY}/v1/games/multiget/thumbnails?universeIds=${ids.join(',')}&countPerUniverse=1&defaultRowSize=1&size=768x432&format=Png&isCircular=false`); d.data.forEach(x => { if (x.thumbnails && x.thumbnails[0] && x.thumbnails[0].imageUrl) thumbs[x.universeId] = x.thumbnails[0].imageUrl; }); } catch {}
     }
     let tv = 0, tp = 0, res = 0;
     const games = GAMES_CFG.map(g => {
-      const s = stats[g.universeId];
+      const s = stats[g.universeId]; // matched by universeId — each game keeps its own stats
       if (s) { tv += s.visits || 0; tp += s.playing || 0; res++; }
       return { name: (s && s.name) || g.name, placeId: g.placeId, visits: s ? (s.visits || 0) : null, playing: s ? (s.playing || 0) : null, thumb: thumbs[g.universeId] || null, url: `https://www.roblox.com/games/${g.placeId}` };
     });
@@ -599,70 +645,81 @@
     const ids = [...new Set(TEAM_CFG.map(t => t.id))];
     const heads = {};
     try {
-      const d = await cj(`https://thumbnails.${PXY}/v1/users/avatar-headshot?userIds=${ids.join(',')}&size=420x420&format=Png&isCircular=false`);
-      d.data.forEach(x => { if (x.imageUrl) heads[x.targetId] = x.imageUrl; });
+      const d = await cjRetry(`https://thumbnails.${PXY}/v1/users/avatar-headshot?userIds=${ids.join(',')}&size=420x420&format=Png&isCircular=false`);
+      d.data.forEach(x => { if (x.state === 'Completed' && x.imageUrl) heads[x.targetId] = x.imageUrl; });
     } catch {}
-    const members = TEAM_CFG.map(t => ({ name: t.name, role: t.role, blurb: t.blurb, avatar: heads[t.id] || null, profile: t.portfolio || `https://www.roblox.com/users/${t.id}/profile` }));
+    const members = TEAM_CFG.map(t => ({ id: t.id, name: t.name, role: t.role, blurb: t.blurb, avatar: heads[t.id] || null, profile: t.portfolio || `https://www.roblox.com/users/${t.id}/profile` }));
     return { members };
   }
 
-  // Try the backend first; fall back to direct RoProxy fetches (static hosting)
+  // Backend first; fall back to direct RoProxy on a static host
   async function fetchGames() { try { const r = await fetch('/api/games', { cache: 'no-store' }); if (!r.ok) throw 0; return await r.json(); } catch { return clientGames(); } }
   async function fetchTeam()  { try { const r = await fetch('/api/team',  { cache: 'no-store' }); if (!r.ok) throw 0; return await r.json(); } catch { return clientTeam(); } }
 
-  // --- data ---
-  let firstLoad = true;
+  // --- games data ---
   async function load() {
-    try {
-      const d = await fetchGames();
-
-      if (firstLoad) {
-        renderCards(d.games);
-        // hero collage from real thumbnails
-        const urls = d.games.map(g => g.thumb).filter(Boolean);
-        if (urls.length) { THUMBS = urls; TILES.forEach((tl, i) => paintTile(tl, i)); }
-        firstLoad = false;
-      } else {
-        updateCards(d.games);
-      }
-
-      document.getElementById('gCount').textContent = exact(d.count);
-      if (d.resolved > 0) {
-        animateNum(document.getElementById('totVisits'), d.totalVisits, (v) => compact(v));
-        document.getElementById('totPlaying').textContent = exact(d.totalPlaying) + '+';
-        document.getElementById('heroPlaying').textContent = exact(d.totalPlaying) + '+';
-        document.getElementById('heroVisits').textContent = compact(d.totalVisits);
-        statusEl.textContent = 'Live from Roblox · updated ' + new Date(d.updated).toLocaleTimeString();
-      } else {
-        ['totVisits','totPlaying','heroPlaying','heroVisits'].forEach(id => document.getElementById(id).textContent = '—');
-        statusEl.textContent = 'Waiting for Roblox stats…';
-      }
-    } catch (e) {
-      statusEl.textContent = 'Could not reach the stats server — retrying…';
+    let d;
+    try { d = await fetchGames(); }
+    catch { statusEl.textContent = 'Reconnecting to Roblox…'; return; } // keep whatever is shown; never blank
+    applyGames(d);
+    const urls = d.games.map(g => g.thumb).filter(Boolean);
+    if (urls.length) { THUMBS = urls; TILES.forEach((tl, i) => paintTile(tl, i)); }
+    document.getElementById('gCount').textContent = exact(d.count);
+    if (d.resolved > 0) {
+      animateNum(document.getElementById('totVisits'), d.totalVisits, (v) => compact(v));
+      document.getElementById('totPlaying').textContent = exact(d.totalPlaying) + '+';
+      document.getElementById('heroPlaying').textContent = exact(d.totalPlaying) + '+';
+      document.getElementById('heroVisits').textContent = compact(d.totalVisits);
+      statusEl.textContent = 'Live from Roblox · updated ' + new Date(d.updated).toLocaleTimeString();
+    } else {
+      statusEl.textContent = 'Reconnecting to Roblox…';
+      setTimeout(load, 4000); // nothing resolved this time — try again soon
     }
   }
-
+  renderSkeleton();
+  document.getElementById('gCount').textContent = exact(GAMES_CFG.length);
   load();
   setInterval(load, 30000);
 
   // --- team ---
-  async function loadTeam() {
-    const grid = document.getElementById('teamGrid');
-    if (!grid) return;
-    try {
-      const d = await fetchTeam();
-      grid.innerHTML = '';
-      d.members.forEach((m) => {
-        const el = document.createElement(m.profile ? 'a' : 'div');
-        el.className = 'tcard reveal';
-        if (m.profile) { el.href = m.profile; el.target = '_blank'; el.rel = 'noopener'; }
-        el.innerHTML = `
-          <div class="pic">${m.avatar ? `<img src="${m.avatar}" alt="${m.name}" loading="lazy">` : '<span class="ph">Avatar</span>'}</div>
-          <div class="info"><h3>${m.name}</h3><div class="role">${m.role}</div><p>${m.blurb}</p></div>`;
-        grid.appendChild(el); watch(el);
-      });
-    } catch (e) { /* leave section empty on failure */ }
+  const teamGrid = document.getElementById('teamGrid');
+  function renderTeamSkeleton() {
+    if (!teamGrid) return;
+    teamGrid.innerHTML = '';
+    TEAM_CFG.forEach(t => {
+      const profile = t.portfolio || `https://www.roblox.com/users/${t.id}/profile`;
+      const el = document.createElement('a');
+      el.className = 'tcard reveal'; el.href = profile; el.target = '_blank'; el.rel = 'noopener';
+      el.dataset.uid = t.id;
+      el.innerHTML = `
+        <div class="pic"><span class="ph">Avatar</span></div>
+        <div class="info"><h3>${t.name}</h3><div class="role">${t.role}</div><p>${t.blurb}</p></div>`;
+      teamGrid.appendChild(el); watch(el);
+    });
   }
+  function setAvatar(el, url, name) {
+    const pic = el.querySelector('.pic');
+    if (pic.querySelector('img')) return;
+    const img = new Image(); img.alt = name; img.loading = 'lazy';
+    let tries = 0;
+    img.onerror = () => { if (tries++ < 3) setTimeout(() => { img.src = url + (url.includes('?') ? '&' : '?') + '_r=' + tries; }, 700 * tries); };
+    img.onload = () => { pic.querySelector('.ph')?.remove(); pic.insertBefore(img, pic.firstChild); };
+    img.src = url;
+  }
+  let teamTries = 0;
+  async function loadTeam() {
+    if (!teamGrid) return;
+    let d;
+    try { d = await fetchTeam(); } catch { if (teamTries++ < 12) setTimeout(loadTeam, 3000); return; }
+    let missing = 0;
+    d.members.forEach(m => {
+      const el = teamGrid.querySelector(`.tcard[data-uid="${m.id}"]`);
+      if (!el) return;
+      if (m.avatar) setAvatar(el, m.avatar, m.name); else missing++;
+    });
+    if (missing && teamTries++ < 12) setTimeout(loadTeam, 3000); // keep retrying until every avatar loads
+  }
+  renderTeamSkeleton();
   loadTeam();
 </script>
 </body>
