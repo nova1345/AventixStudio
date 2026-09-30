@@ -1,78 +1,78 @@
 {
-  "updated": 1790723237331,
+  "updated": 1790734129028,
   "count": 8,
   "resolved": 8,
-  "totalVisits": 33880823,
-  "totalPlaying": 1418,
+  "totalVisits": 33898864,
+  "totalPlaying": 1635,
   "games": [
     {
       "name": "Own a Grocery Store 🛒",
       "placeId": "117985153726741",
       "universeId": "10553704684",
-      "visits": 2119629,
-      "playing": 1263,
+      "visits": 2134934,
+      "playing": 1492,
       "thumb": "https://tr.rbxcdn.com/180DAY-740e09f193c6ad7cbbd3681f8b832509/768/432/Image/Png/noFilter",
       "url": "https://www.roblox.com/games/117985153726741"
-    },
-    {
-      "name": "[🎲] Rain to Grow ⛅",
-      "placeId": "138282251986725",
-      "universeId": "10458283695",
-      "visits": 191107,
-      "playing": 55,
-      "thumb": "https://tr.rbxcdn.com/180DAY-aaec83b9a6e5d8f104f2d6f97370e446/768/432/Image/Png/noFilter",
-      "url": "https://www.roblox.com/games/138282251986725"
-    },
-    {
-      "name": "NPC Battle Arena 🤖",
-      "placeId": "70687173496438",
-      "universeId": "10542745581",
-      "visits": 631227,
-      "playing": 52,
-      "thumb": "https://tr.rbxcdn.com/180DAY-4a3af26eef65e47546207ce806be7249/768/432/Image/Png/noFilter",
-      "url": "https://www.roblox.com/games/70687173496438"
-    },
-    {
-      "name": "Where Am I? 🗺️ [Alpha]",
-      "placeId": "123243055683524",
-      "universeId": "6938969105",
-      "visits": 17092505,
-      "playing": 33,
-      "thumb": "https://tr.rbxcdn.com/180DAY-0c9ae9fdb0694194e8f9b140fe4d4613/768/432/Image/Png/noFilter",
-      "url": "https://www.roblox.com/games/123243055683524"
     },
     {
       "name": "[NOW!!] My Gas Station",
       "placeId": "132942260607514",
       "universeId": "10749062975",
-      "visits": 122695,
-      "playing": 13,
+      "visits": 122976,
+      "playing": 49,
       "thumb": "https://tr.rbxcdn.com/180DAY-e76a37004332f013f09888a598765552/768/432/Image/Png/noFilter",
       "url": "https://www.roblox.com/games/132942260607514"
     },
     {
-      "name": "[10X] +1 Speed ASMR Escape",
-      "placeId": "108914645067573",
-      "universeId": "10241080118",
-      "visits": 4451722,
-      "playing": 1,
-      "thumb": "https://tr.rbxcdn.com/180DAY-813a9dc90f3b213a6f0e2285add1f6c5/768/432/Image/Png/noFilter",
-      "url": "https://www.roblox.com/games/108914645067573"
+      "name": "Where Am I? 🗺️ [Alpha]",
+      "placeId": "123243055683524",
+      "universeId": "6938969105",
+      "visits": 17093671,
+      "playing": 43,
+      "thumb": "https://tr.rbxcdn.com/180DAY-0c9ae9fdb0694194e8f9b140fe4d4613/768/432/Image/Png/noFilter",
+      "url": "https://www.roblox.com/games/123243055683524"
+    },
+    {
+      "name": "NPC Battle Arena 🤖",
+      "placeId": "70687173496438",
+      "universeId": "10542745581",
+      "visits": 632037,
+      "playing": 29,
+      "thumb": "https://tr.rbxcdn.com/180DAY-4a3af26eef65e47546207ce806be7249/768/432/Image/Png/noFilter",
+      "url": "https://www.roblox.com/games/70687173496438"
+    },
+    {
+      "name": "[🎲] Rain to Grow ⛅",
+      "placeId": "138282251986725",
+      "universeId": "10458283695",
+      "visits": 191453,
+      "playing": 19,
+      "thumb": "https://tr.rbxcdn.com/180DAY-aaec83b9a6e5d8f104f2d6f97370e446/768/432/Image/Png/noFilter",
+      "url": "https://www.roblox.com/games/138282251986725"
     },
     {
       "name": "[UPD 🎁 ] Build A Buddy",
       "placeId": "18808541784",
       "universeId": "6372942215",
-      "visits": 9214645,
-      "playing": 1,
+      "visits": 9214704,
+      "playing": 2,
       "thumb": "https://tr.rbxcdn.com/180DAY-377fbd85e2b9ca3d41be372bf5918925/768/432/Image/Png/noFilter",
       "url": "https://www.roblox.com/games/18808541784"
+    },
+    {
+      "name": "[10X] +1 Speed ASMR Escape",
+      "placeId": "108914645067573",
+      "universeId": "10241080118",
+      "visits": 4451793,
+      "playing": 1,
+      "thumb": "https://tr.rbxcdn.com/180DAY-813a9dc90f3b213a6f0e2285add1f6c5/768/432/Image/Png/noFilter",
+      "url": "https://www.roblox.com/games/108914645067573"
     },
     {
       "name": "My Nuke Farm [☢️]",
       "placeId": "123042384638400",
       "universeId": "10551750534",
-      "visits": 57293,
+      "visits": 57296,
       "playing": 0,
       "thumb": "https://tr.rbxcdn.com/180DAY-7710cdab2302cd96d0bc2e66cf15265e/768/432/Image/Png/noFilter",
       "url": "https://www.roblox.com/games/123042384638400"
