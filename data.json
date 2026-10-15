@@ -1,16 +1,16 @@
 {
-  "updated": 1792092328243,
+  "updated": 1792103829266,
   "count": 8,
   "resolved": 8,
-  "totalVisits": 41997519,
-  "totalPlaying": 3691,
+  "totalVisits": 42040227,
+  "totalPlaying": 3000,
   "games": [
     {
       "name": "[🎃] Own a Grocery Store 🛒",
       "placeId": "117985153726741",
       "universeId": "10553704684",
-      "visits": 9924626,
-      "playing": 3541,
+      "visits": 9964754,
+      "playing": 2860,
       "thumb": "https://tr.rbxcdn.com/180DAY-740e09f193c6ad7cbbd3681f8b832509/768/432/Image/Png/noFilter",
       "url": "https://www.roblox.com/games/117985153726741"
     },
@@ -18,35 +18,35 @@
       "name": "NPC Battle Arena 🤖",
       "placeId": "70687173496438",
       "universeId": "10542745581",
-      "visits": 711579,
-      "playing": 44,
+      "visits": 712486,
+      "playing": 59,
       "thumb": "https://tr.rbxcdn.com/180DAY-4a3af26eef65e47546207ce806be7249/768/432/Image/Png/noFilter",
       "url": "https://www.roblox.com/games/70687173496438"
-    },
-    {
-      "name": "Where Am I? 🗺️ [Alpha]",
-      "placeId": "123243055683524",
-      "universeId": "6938969105",
-      "visits": 17255881,
-      "playing": 40,
-      "thumb": "https://tr.rbxcdn.com/180DAY-0c9ae9fdb0694194e8f9b140fe4d4613/768/432/Image/Png/noFilter",
-      "url": "https://www.roblox.com/games/123243055683524"
     },
     {
       "name": "[🎲] Rain to Grow ⛅",
       "placeId": "138282251986725",
       "universeId": "10458283695",
-      "visits": 223328,
-      "playing": 30,
+      "visits": 223809,
+      "playing": 36,
       "thumb": "https://tr.rbxcdn.com/180DAY-aaec83b9a6e5d8f104f2d6f97370e446/768/432/Image/Png/noFilter",
       "url": "https://www.roblox.com/games/138282251986725"
+    },
+    {
+      "name": "Where Am I? 🗺️ [Alpha]",
+      "placeId": "123243055683524",
+      "universeId": "6938969105",
+      "visits": 17256588,
+      "playing": 27,
+      "thumb": "https://tr.rbxcdn.com/180DAY-0c9ae9fdb0694194e8f9b140fe4d4613/768/432/Image/Png/noFilter",
+      "url": "https://www.roblox.com/games/123243055683524"
     },
     {
       "name": "[NEW!] My Gas Station",
       "placeId": "132942260607514",
       "universeId": "10749062975",
-      "visits": 138309,
-      "playing": 25,
+      "visits": 138636,
+      "playing": 12,
       "thumb": "https://tr.rbxcdn.com/180DAY-e76a37004332f013f09888a598765552/768/432/Image/Png/noFilter",
       "url": "https://www.roblox.com/games/132942260607514"
     },
@@ -54,8 +54,8 @@
       "name": "[UPD 🎁 ] Build A Buddy",
       "placeId": "18808541784",
       "universeId": "6372942215",
-      "visits": 9225196,
-      "playing": 8,
+      "visits": 9225304,
+      "playing": 5,
       "thumb": "https://tr.rbxcdn.com/180DAY-377fbd85e2b9ca3d41be372bf5918925/768/432/Image/Png/noFilter",
       "url": "https://www.roblox.com/games/18808541784"
     },
@@ -63,8 +63,8 @@
       "name": "[10X] +1 Speed ASMR Escape",
       "placeId": "108914645067573",
       "universeId": "10241080118",
-      "visits": 4460980,
-      "playing": 3,
+      "visits": 4461030,
+      "playing": 1,
       "thumb": "https://tr.rbxcdn.com/180DAY-813a9dc90f3b213a6f0e2285add1f6c5/768/432/Image/Png/noFilter",
       "url": "https://www.roblox.com/games/108914645067573"
     },
@@ -92,7 +92,7 @@
       "name": "Syveric",
       "role": "Founder & Studio Lead",
       "blurb": "Maintains Aventix Studios and the core behind it.",
-      "avatar": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-80E9E5827DE3884EF7A7E0CF46DF3459-Png/420/420/AvatarHeadshot/Png/noFilter",
+      "avatar": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-5667BE1524B617F42D13B4F6685CADC1-Png/420/420/AvatarHeadshot/Png/noFilter",
       "profile": "https://viken.games/"
     },
     {
