@@ -1,16 +1,16 @@
 {
-  "updated": 1793051629262,
+  "updated": 1793063923988,
   "count": 8,
   "resolved": 8,
-  "totalVisits": 44463929,
-  "totalPlaying": 1464,
+  "totalVisits": 44481517,
+  "totalPlaying": 1432,
   "games": [
     {
       "name": "[🎃] Own a Grocery Store 🛒",
       "placeId": "117985153726741",
       "universeId": "10553704684",
-      "visits": 12200063,
-      "playing": 1357,
+      "visits": 12215071,
+      "playing": 1335,
       "thumb": "https://tr.rbxcdn.com/180DAY-740e09f193c6ad7cbbd3681f8b832509/768/432/Image/Png/noFilter",
       "url": "https://www.roblox.com/games/117985153726741"
     },
@@ -18,8 +18,8 @@
       "name": "NPC Battle Arena 🤖",
       "placeId": "70687173496438",
       "universeId": "10542745581",
-      "visits": 784123,
-      "playing": 41,
+      "visits": 785194,
+      "playing": 44,
       "thumb": "https://tr.rbxcdn.com/180DAY-4a3af26eef65e47546207ce806be7249/768/432/Image/Png/noFilter",
       "url": "https://www.roblox.com/games/70687173496438"
     },
@@ -27,8 +27,8 @@
       "name": "Where Am I? 🗺️ [Alpha]",
       "placeId": "123243055683524",
       "universeId": "6938969105",
-      "visits": 17325405,
-      "playing": 28,
+      "visits": 17326044,
+      "playing": 29,
       "thumb": "https://tr.rbxcdn.com/180DAY-0c9ae9fdb0694194e8f9b140fe4d4613/768/432/Image/Png/noFilter",
       "url": "https://www.roblox.com/games/123243055683524"
     },
@@ -36,46 +36,46 @@
       "name": "[🎃NOW] My Gas Station",
       "placeId": "132942260607514",
       "universeId": "10749062975",
-      "visits": 166594,
-      "playing": 23,
+      "visits": 166938,
+      "playing": 17,
       "thumb": "https://tr.rbxcdn.com/180DAY-1bc1b7be3bc620f2166edca790c5c42e/768/432/Image/Png/noFilter",
       "url": "https://www.roblox.com/games/132942260607514"
-    },
-    {
-      "name": "[🎲] Rain to Grow ⛅",
-      "placeId": "138282251986725",
-      "universeId": "10458283695",
-      "visits": 231688,
-      "playing": 8,
-      "thumb": "https://tr.rbxcdn.com/180DAY-aaec83b9a6e5d8f104f2d6f97370e446/768/432/Image/Png/noFilter",
-      "url": "https://www.roblox.com/games/138282251986725"
     },
     {
       "name": "[10X] +1 Speed ASMR Escape",
       "placeId": "108914645067573",
       "universeId": "10241080118",
-      "visits": 4465607,
-      "playing": 6,
+      "visits": 4465920,
+      "playing": 3,
       "thumb": "https://tr.rbxcdn.com/180DAY-813a9dc90f3b213a6f0e2285add1f6c5/768/432/Image/Png/noFilter",
       "url": "https://www.roblox.com/games/108914645067573"
-    },
-    {
-      "name": "[UPD 🎁 ] Build A Buddy",
-      "placeId": "18808541784",
-      "universeId": "6372942215",
-      "visits": 9232697,
-      "playing": 1,
-      "thumb": "https://tr.rbxcdn.com/180DAY-377fbd85e2b9ca3d41be372bf5918925/768/432/Image/Png/noFilter",
-      "url": "https://www.roblox.com/games/18808541784"
     },
     {
       "name": "My Nuke Farm [☢️]",
       "placeId": "123042384638400",
       "universeId": "10551750534",
-      "visits": 57752,
-      "playing": 0,
+      "visits": 57780,
+      "playing": 2,
       "thumb": "https://tr.rbxcdn.com/180DAY-7710cdab2302cd96d0bc2e66cf15265e/768/432/Image/Png/noFilter",
       "url": "https://www.roblox.com/games/123042384638400"
+    },
+    {
+      "name": "[UPD 🎁 ] Build A Buddy",
+      "placeId": "18808541784",
+      "universeId": "6372942215",
+      "visits": 9232796,
+      "playing": 1,
+      "thumb": "https://tr.rbxcdn.com/180DAY-377fbd85e2b9ca3d41be372bf5918925/768/432/Image/Png/noFilter",
+      "url": "https://www.roblox.com/games/18808541784"
+    },
+    {
+      "name": "[🎲] Rain to Grow ⛅",
+      "placeId": "138282251986725",
+      "universeId": "10458283695",
+      "visits": 231774,
+      "playing": 1,
+      "thumb": "https://tr.rbxcdn.com/180DAY-aaec83b9a6e5d8f104f2d6f97370e446/768/432/Image/Png/noFilter",
+      "url": "https://www.roblox.com/games/138282251986725"
     }
   ],
   "team": [
@@ -84,7 +84,7 @@
       "name": "DaFnxEl",
       "role": "Founder & Studio Lead",
       "blurb": "Maintains Aventix Studios and the core behind it.",
-      "avatar": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-E7885C64B1739927A3C5F202576ADBD2-Png/420/420/AvatarHeadshot/Png/noFilter",
+      "avatar": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-EA7997657B2E98B934FE165AE7821BAC-Png/420/420/AvatarHeadshot/Png/noFilter",
       "profile": "https://www.roblox.com/users/1169941746/profile"
     },
     {
