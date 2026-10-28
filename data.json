@@ -1,43 +1,43 @@
 {
-  "updated": 1793140255377,
+  "updated": 1793151960020,
   "count": 8,
   "resolved": 8,
-  "totalVisits": 44610212,
-  "totalPlaying": 1327,
+  "totalVisits": 44625509,
+  "totalPlaying": 1202,
   "games": [
     {
       "name": "[🎃] Own a Grocery Store 🛒",
       "placeId": "117985153726741",
       "universeId": "10553704684",
-      "visits": 12329552,
-      "playing": 1183,
+      "visits": 12342636,
+      "playing": 1135,
       "thumb": "https://tr.rbxcdn.com/180DAY-740e09f193c6ad7cbbd3681f8b832509/768/432/Image/Png/noFilter",
       "url": "https://www.roblox.com/games/117985153726741"
-    },
-    {
-      "name": "Where Am I? 🗺️ [Alpha]",
-      "placeId": "123243055683524",
-      "universeId": "6938969105",
-      "visits": 17331060,
-      "playing": 49,
-      "thumb": "https://tr.rbxcdn.com/180DAY-0c9ae9fdb0694194e8f9b140fe4d4613/768/432/Image/Png/noFilter",
-      "url": "https://www.roblox.com/games/123243055683524"
     },
     {
       "name": "NPC Battle Arena 🤖",
       "placeId": "70687173496438",
       "universeId": "10542745581",
-      "visits": 790496,
-      "playing": 47,
+      "visits": 791370,
+      "playing": 30,
       "thumb": "https://tr.rbxcdn.com/180DAY-4a3af26eef65e47546207ce806be7249/768/432/Image/Png/noFilter",
       "url": "https://www.roblox.com/games/70687173496438"
+    },
+    {
+      "name": "Where Am I? 🗺️ [Alpha]",
+      "placeId": "123243055683524",
+      "universeId": "6938969105",
+      "visits": 17331862,
+      "playing": 17,
+      "thumb": "https://tr.rbxcdn.com/180DAY-0c9ae9fdb0694194e8f9b140fe4d4613/768/432/Image/Png/noFilter",
+      "url": "https://www.roblox.com/games/123243055683524"
     },
     {
       "name": "[🎃NOW] My Gas Station",
       "placeId": "132942260607514",
       "universeId": "10749062975",
-      "visits": 168018,
-      "playing": 23,
+      "visits": 168212,
+      "playing": 9,
       "thumb": "https://tr.rbxcdn.com/180DAY-1bc1b7be3bc620f2166edca790c5c42e/768/432/Image/Png/noFilter",
       "url": "https://www.roblox.com/games/132942260607514"
     },
@@ -45,26 +45,17 @@
       "name": "[🎲] Rain to Grow ⛅",
       "placeId": "138282251986725",
       "universeId": "10458283695",
-      "visits": 232242,
-      "playing": 19,
+      "visits": 232368,
+      "playing": 7,
       "thumb": "https://tr.rbxcdn.com/180DAY-aaec83b9a6e5d8f104f2d6f97370e446/768/432/Image/Png/noFilter",
       "url": "https://www.roblox.com/games/138282251986725"
-    },
-    {
-      "name": "My Nuke Farm [☢️]",
-      "placeId": "123042384638400",
-      "universeId": "10551750534",
-      "visits": 58676,
-      "playing": 3,
-      "thumb": "https://tr.rbxcdn.com/180DAY-7710cdab2302cd96d0bc2e66cf15265e/768/432/Image/Png/noFilter",
-      "url": "https://www.roblox.com/games/123042384638400"
     },
     {
       "name": "[UPD 🎁 ] Build A Buddy",
       "placeId": "18808541784",
       "universeId": "6372942215",
-      "visits": 9233255,
-      "playing": 2,
+      "visits": 9233366,
+      "playing": 3,
       "thumb": "https://tr.rbxcdn.com/180DAY-377fbd85e2b9ca3d41be372bf5918925/768/432/Image/Png/noFilter",
       "url": "https://www.roblox.com/games/18808541784"
     },
@@ -72,10 +63,19 @@
       "name": "[10X] +1 Speed ASMR Escape",
       "placeId": "108914645067573",
       "universeId": "10241080118",
-      "visits": 4466913,
+      "visits": 4466953,
       "playing": 1,
       "thumb": "https://tr.rbxcdn.com/180DAY-813a9dc90f3b213a6f0e2285add1f6c5/768/432/Image/Png/noFilter",
       "url": "https://www.roblox.com/games/108914645067573"
+    },
+    {
+      "name": "My Nuke Farm [☢️]",
+      "placeId": "123042384638400",
+      "universeId": "10551750534",
+      "visits": 58742,
+      "playing": 0,
+      "thumb": "https://tr.rbxcdn.com/180DAY-7710cdab2302cd96d0bc2e66cf15265e/768/432/Image/Png/noFilter",
+      "url": "https://www.roblox.com/games/123042384638400"
     }
   ],
   "team": [
@@ -84,7 +84,7 @@
       "name": "DaFnxEl",
       "role": "Founder & Studio Lead",
       "blurb": "Maintains Aventix Studios and the core behind it.",
-      "avatar": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-62D40100C801FF3BFCA5411EE9299F3E-Png/420/420/AvatarHeadshot/Png/noFilter",
+      "avatar": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-46B81FE384D38F81749B64B412E5AAAF-Png/420/420/AvatarHeadshot/Png/noFilter",
       "profile": "https://www.roblox.com/users/1169941746/profile"
     },
     {
