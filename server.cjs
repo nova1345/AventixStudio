@@ -75,6 +75,7 @@ async function getTeam() {
 const universeCache = new Map(); // placeId -> universeId (permanent)
 let statsCache = { time: 0, payload: null };
 const TTL = 25000; // 25s
+let peakToday = 0, peakDate = ''; // in-memory peak players (UTC day)
 
 async function resolveUniverse(placeId) {
   if (universeCache.has(placeId)) return universeCache.get(placeId);
@@ -118,7 +119,10 @@ async function buildPayload() {
   });
 
   games.sort((a, b) => (b.playing || 0) - (a.playing || 0)); // highest CCU first
-  return { updated: Date.now(), count: GAMES.length, resolved: live, totalVisits, totalPlaying, games };
+  const today = new Date().toISOString().slice(0, 10);
+  if (peakDate !== today) { peakDate = today; peakToday = 0; }
+  peakToday = Math.max(peakToday, totalPlaying);
+  return { updated: Date.now(), count: GAMES.length, resolved: live, totalVisits, totalPlaying, peakToday, peakDate, games };
 }
 
 async function getStats() {

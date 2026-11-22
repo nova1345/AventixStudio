@@ -53,7 +53,12 @@ async function j(sub, pq) {
   tp = games.reduce((a, g) => a + (g.playing || 0), 0);
   res = games.filter(g => g.visits != null).length;
 
-  const out = { updated: Date.now(), count: GAMES.length, resolved: res, totalVisits: tv, totalPlaying: tp, games, team };
+  // Peak players today (UTC day) — carried + reset across runs via data.json
+  const today = new Date().toISOString().slice(0, 10);
+  let peakToday = tp, peakDate = today;
+  if (prev.peakDate === today) peakToday = Math.max(prev.peakToday || 0, tp);
+
+  const out = { updated: Date.now(), count: GAMES.length, resolved: res, totalVisits: tv, totalPlaying: tp, peakToday, peakDate, games, team };
   fs.writeFileSync(outPath, JSON.stringify(out, null, 2));
   console.log(`data.json written: ${res}/${GAMES.length} games, ${Object.keys(heads).length}/${uids.length} avatars this run`);
 })();
