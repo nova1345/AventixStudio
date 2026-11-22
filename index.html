@@ -558,8 +558,9 @@
   // Load a thumbnail into a card, retrying the image itself on failure
   function setThumb(el, url, name) {
     const th = el.querySelector('.gthumb');
-    if (!url || th.querySelector('img')) return;
-    const img = new Image(); img.alt = name; img.loading = 'lazy';
+    if (!url || th.querySelector('img') || th.dataset.loading) return;
+    th.dataset.loading = '1';
+    const img = new Image(); img.alt = name; // no lazy: a detached lazy image never fires onload
     let tries = 0;
     img.onerror = () => { if (tries++ < 3) setTimeout(() => { img.src = url + (url.includes('?') ? '&' : '?') + '_r=' + tries; }, 600 * tries); };
     img.onload = () => { th.insertBefore(img, th.firstChild); };
@@ -738,8 +739,9 @@
   }
   function setAvatar(el, url, name) {
     const pic = el.querySelector('.pic');
-    if (pic.querySelector('img')) return;
-    const img = new Image(); img.alt = name; img.loading = 'lazy';
+    if (pic.querySelector('img') || pic.dataset.loading) return;
+    pic.dataset.loading = '1';
+    const img = new Image(); img.alt = name; // no lazy: a detached lazy image never fires onload
     let tries = 0;
     img.onerror = () => { if (tries++ < 3) setTimeout(() => { img.src = url + (url.includes('?') ? '&' : '?') + '_r=' + tries; }, 700 * tries); };
     img.onload = () => { pic.querySelector('.ph')?.remove(); pic.insertBefore(img, pic.firstChild); };
