@@ -11,7 +11,7 @@ const GAMES = [
 ];
 
 const TEAM = [
-  { id: "1169941746", name: "BuiltOnprofit",     role: "Founder & Studio Lead", blurb: "Maintains Aventix Studios and the core behind it." },
+  { id: "11945072554", name: "BuiltOnProfit",     role: "Founder & Studio Lead", blurb: "Maintains Aventix Studios and the core behind it." },
   { id: "105519417",  name: "Syveric",     role: "Founder & Studio Lead", blurb: "Maintains Aventix Studios and the core behind it.", portfolio: "https://viken.games/" },
   { id: "1117152954", name: "Bubushniki",  role: "Founder & Studio Lead", blurb: "Maintains Aventix Studios and the core behind it." },
   { id: "3382361537", name: "Being_Built", role: "Founder & Studio Lead", blurb: "Maintains Aventix Studios and the core behind it." },
