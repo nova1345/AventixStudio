@@ -1,18 +1,18 @@
 {
-  "updated": 1795553627593,
+  "updated": 1795579279950,
   "count": 4,
   "resolved": 4,
-  "totalVisits": 44490833,
-  "totalPlaying": 2301,
-  "peakToday": 2301,
-  "peakDate": "2026-11-24",
+  "totalVisits": 44544236,
+  "totalPlaying": 1817,
+  "peakToday": 1817,
+  "peakDate": "2026-11-25",
   "games": [
     {
       "name": "Own a Grocery Store 🛒",
       "placeId": "117985153726741",
       "universeId": "10553704684",
-      "visits": 16903737,
-      "playing": 2254,
+      "visits": 16955480,
+      "playing": 1793,
       "thumb": "https://tr.rbxcdn.com/180DAY-b2738d9bf26be3cb641957b9bcd6036a/768/432/Image/Png/noFilter",
       "url": "https://www.roblox.com/games/117985153726741"
     },
@@ -20,8 +20,8 @@
       "name": "Where Am I? 🗺️ [Alpha]",
       "placeId": "123243055683524",
       "universeId": "6938969105",
-      "visits": 17470003,
-      "playing": 26,
+      "visits": 17470741,
+      "playing": 14,
       "thumb": "https://tr.rbxcdn.com/180DAY-0c9ae9fdb0694194e8f9b140fe4d4613/768/432/Image/Png/noFilter",
       "url": "https://www.roblox.com/games/123243055683524"
     },
@@ -29,8 +29,8 @@
       "name": "NPC Battle Arena 🤖",
       "placeId": "70687173496438",
       "universeId": "10542745581",
-      "visits": 869514,
-      "playing": 19,
+      "visits": 870321,
+      "playing": 7,
       "thumb": "https://tr.rbxcdn.com/180DAY-4a3af26eef65e47546207ce806be7249/768/432/Image/Png/noFilter",
       "url": "https://www.roblox.com/games/70687173496438"
     },
@@ -38,8 +38,8 @@
       "name": "[UPD 🎁 ] Build A Buddy",
       "placeId": "18808541784",
       "universeId": "6372942215",
-      "visits": 9247579,
-      "playing": 2,
+      "visits": 9247694,
+      "playing": 3,
       "thumb": "https://tr.rbxcdn.com/180DAY-377fbd85e2b9ca3d41be372bf5918925/768/432/Image/Png/noFilter",
       "url": "https://www.roblox.com/games/18808541784"
     }
