@@ -1,45 +1,45 @@
 {
-  "updated": 1795579279950,
+  "updated": 1795616777367,
   "count": 4,
   "resolved": 4,
-  "totalVisits": 44544236,
-  "totalPlaying": 1817,
-  "peakToday": 1817,
+  "totalVisits": 44626514,
+  "totalPlaying": 2875,
+  "peakToday": 2875,
   "peakDate": "2026-11-25",
   "games": [
     {
       "name": "Own a Grocery Store 🛒",
       "placeId": "117985153726741",
       "universeId": "10553704684",
-      "visits": 16955480,
-      "playing": 1793,
+      "visits": 17035497,
+      "playing": 2830,
       "thumb": "https://tr.rbxcdn.com/180DAY-b2738d9bf26be3cb641957b9bcd6036a/768/432/Image/Png/noFilter",
       "url": "https://www.roblox.com/games/117985153726741"
-    },
-    {
-      "name": "Where Am I? 🗺️ [Alpha]",
-      "placeId": "123243055683524",
-      "universeId": "6938969105",
-      "visits": 17470741,
-      "playing": 14,
-      "thumb": "https://tr.rbxcdn.com/180DAY-0c9ae9fdb0694194e8f9b140fe4d4613/768/432/Image/Png/noFilter",
-      "url": "https://www.roblox.com/games/123243055683524"
     },
     {
       "name": "NPC Battle Arena 🤖",
       "placeId": "70687173496438",
       "universeId": "10542745581",
-      "visits": 870321,
-      "playing": 7,
+      "visits": 871481,
+      "playing": 36,
       "thumb": "https://tr.rbxcdn.com/180DAY-4a3af26eef65e47546207ce806be7249/768/432/Image/Png/noFilter",
       "url": "https://www.roblox.com/games/70687173496438"
+    },
+    {
+      "name": "Where Am I? 🗺️ [Alpha]",
+      "placeId": "123243055683524",
+      "universeId": "6938969105",
+      "visits": 17471739,
+      "playing": 9,
+      "thumb": "https://tr.rbxcdn.com/180DAY-0c9ae9fdb0694194e8f9b140fe4d4613/768/432/Image/Png/noFilter",
+      "url": "https://www.roblox.com/games/123243055683524"
     },
     {
       "name": "[UPD 🎁 ] Build A Buddy",
       "placeId": "18808541784",
       "universeId": "6372942215",
-      "visits": 9247694,
-      "playing": 3,
+      "visits": 9247797,
+      "playing": 0,
       "thumb": "https://tr.rbxcdn.com/180DAY-377fbd85e2b9ca3d41be372bf5918925/768/432/Image/Png/noFilter",
       "url": "https://www.roblox.com/games/18808541784"
     }
