@@ -1,18 +1,18 @@
 {
-  "updated": 1795707513739,
+  "updated": 1795737711145,
   "count": 4,
   "resolved": 4,
-  "totalVisits": 44863681,
-  "totalPlaying": 3194,
-  "peakToday": 3194,
-  "peakDate": "2026-11-26",
+  "totalVisits": 44965252,
+  "totalPlaying": 2125,
+  "peakToday": 2125,
+  "peakDate": "2026-11-27",
   "games": [
     {
       "name": "Own a Grocery Store 🛒",
       "placeId": "117985153726741",
       "universeId": "10553704684",
-      "visits": 17266334,
-      "playing": 3147,
+      "visits": 17365110,
+      "playing": 2083,
       "thumb": "https://tr.rbxcdn.com/180DAY-b2738d9bf26be3cb641957b9bcd6036a/768/432/Image/Png/noFilter",
       "url": "https://www.roblox.com/games/117985153726741"
     },
@@ -20,8 +20,8 @@
       "name": "NPC Battle Arena 🤖",
       "placeId": "70687173496438",
       "universeId": "10542745581",
-      "visits": 874655,
-      "playing": 29,
+      "visits": 876006,
+      "playing": 26,
       "thumb": "https://tr.rbxcdn.com/180DAY-4a3af26eef65e47546207ce806be7249/768/432/Image/Png/noFilter",
       "url": "https://www.roblox.com/games/70687173496438"
     },
@@ -29,8 +29,8 @@
       "name": "Where Am I? 🗺️ [Alpha]",
       "placeId": "123243055683524",
       "universeId": "6938969105",
-      "visits": 17474495,
-      "playing": 16,
+      "visits": 17475734,
+      "playing": 15,
       "thumb": "https://tr.rbxcdn.com/180DAY-0c9ae9fdb0694194e8f9b140fe4d4613/768/432/Image/Png/noFilter",
       "url": "https://www.roblox.com/games/123243055683524"
     },
@@ -38,8 +38,8 @@
       "name": "[UPD 🎁 ] Build A Buddy",
       "placeId": "18808541784",
       "universeId": "6372942215",
-      "visits": 9248197,
-      "playing": 2,
+      "visits": 9248402,
+      "playing": 1,
       "thumb": "https://tr.rbxcdn.com/180DAY-377fbd85e2b9ca3d41be372bf5918925/768/432/Image/Png/noFilter",
       "url": "https://www.roblox.com/games/18808541784"
     }
@@ -50,7 +50,7 @@
       "name": "BuiltOnProfit",
       "role": "Founder & Studio Lead",
       "blurb": "Maintains Aventix Studios and the core behind it.",
-      "avatar": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-301C9D370309D4C6DB1112A35D63E80F-Png/420/420/AvatarHeadshot/Png/noFilter",
+      "avatar": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-D6794C13F2C3E54C55E5C520B37D69EA-Png/420/420/AvatarHeadshot/Png/noFilter",
       "profile": "https://www.roblox.com/users/11945072554/profile"
     },
     {
