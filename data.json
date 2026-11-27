@@ -1,45 +1,45 @@
 {
-  "updated": 1795768714884,
+  "updated": 1795804098345,
   "count": 4,
   "resolved": 4,
-  "totalVisits": 45031135,
-  "totalPlaying": 1762,
-  "peakToday": 2125,
+  "totalVisits": 45139615,
+  "totalPlaying": 3365,
+  "peakToday": 3365,
   "peakDate": "2026-11-27",
   "games": [
     {
       "name": "Own a Grocery Store 🛒",
       "placeId": "117985153726741",
       "universeId": "10553704684",
-      "visits": 17429345,
-      "playing": 1737,
+      "visits": 17534981,
+      "playing": 3295,
       "thumb": "https://tr.rbxcdn.com/180DAY-b2738d9bf26be3cb641957b9bcd6036a/768/432/Image/Png/noFilter",
       "url": "https://www.roblox.com/games/117985153726741"
-    },
-    {
-      "name": "NPC Battle Arena 🤖",
-      "placeId": "70687173496438",
-      "universeId": "10542745581",
-      "visits": 876825,
-      "playing": 16,
-      "thumb": "https://tr.rbxcdn.com/180DAY-4a3af26eef65e47546207ce806be7249/768/432/Image/Png/noFilter",
-      "url": "https://www.roblox.com/games/70687173496438"
     },
     {
       "name": "Where Am I? 🗺️ [Alpha]",
       "placeId": "123243055683524",
       "universeId": "6938969105",
-      "visits": 17476415,
-      "playing": 8,
+      "visits": 17477703,
+      "playing": 39,
       "thumb": "https://tr.rbxcdn.com/180DAY-0c9ae9fdb0694194e8f9b140fe4d4613/768/432/Image/Png/noFilter",
       "url": "https://www.roblox.com/games/123243055683524"
+    },
+    {
+      "name": "NPC Battle Arena 🤖",
+      "placeId": "70687173496438",
+      "universeId": "10542745581",
+      "visits": 878133,
+      "playing": 21,
+      "thumb": "https://tr.rbxcdn.com/180DAY-4a3af26eef65e47546207ce806be7249/768/432/Image/Png/noFilter",
+      "url": "https://www.roblox.com/games/70687173496438"
     },
     {
       "name": "[UPD 🎁 ] Build A Buddy",
       "placeId": "18808541784",
       "universeId": "6372942215",
-      "visits": 9248550,
-      "playing": 1,
+      "visits": 9248798,
+      "playing": 10,
       "thumb": "https://tr.rbxcdn.com/180DAY-377fbd85e2b9ca3d41be372bf5918925/768/432/Image/Png/noFilter",
       "url": "https://www.roblox.com/games/18808541784"
     }
@@ -50,7 +50,7 @@
       "name": "BuiltOnProfit",
       "role": "Founder & Studio Lead",
       "blurb": "Maintains Aventix Studios and the core behind it.",
-      "avatar": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-D6794C13F2C3E54C55E5C520B37D69EA-Png/420/420/AvatarHeadshot/Png/noFilter",
+      "avatar": "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-8E37D6F8A80D1824A5FF276B2F7BAA0B-Png/420/420/AvatarHeadshot/Png/noFilter",
       "profile": "https://www.roblox.com/users/11945072554/profile"
     },
     {
